@@ -121,6 +121,18 @@ main{min-height:60vh}
 .gold-times{display:flex;justify-content:space-between;font-size:12.5px;color:var(--text-2);margin-top:8px}
 .gold-local{margin-top:6px}
 
+/* ---------- کارت ساعت با نماد منطقه (v2.4) ---------- */
+.tzcard{position:relative;overflow:hidden}
+.tzcard>.flagbg{position:absolute;inset:0;z-index:0;opacity:.5;pointer-events:none}
+.tzcard::after{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(11,14,18,.62),rgba(11,14,18,.84) 50%,rgba(11,14,18,.92))}
+html[data-theme="light"] .tzcard::after{background:linear-gradient(180deg,rgba(244,242,236,.6),rgba(244,242,236,.86) 50%,rgba(244,242,236,.94))}
+.tzcard>*{position:relative;z-index:2}
+.tzcard .bigclock{text-shadow:0 2px 14px rgba(0,0,0,.35)}
+html[data-theme="light"] .tzcard .bigclock{text-shadow:none}
+.tz-chip{display:inline-flex;align-items:center;gap:7px}
+.tz-chip .mini-flag{width:20px;height:14px;border-radius:3px;overflow:hidden;flex-shrink:0;box-shadow:0 0 0 1px rgba(128,128,128,.25)}
+.tz-chip .mini-flag svg{width:100%;height:100%;display:block}
+
 /* ---------- session cards ---------- */
 .s-mini{padding:15px}
 .s-head{display:flex;align-items:center;gap:8px;margin-bottom:9px}
@@ -140,19 +152,63 @@ main{min-height:60vh}
 .scard-info{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:10px;font-size:13px}
 .scard-info b{color:var(--gold)}
 
-/* ---------- timeline ---------- */
-.tl{direction:ltr;font-size:12px;margin-top:6px}
-.tl-axis{display:flex;justify-content:space-between;color:var(--text-3);margin-bottom:8px;font-weight:600}
-.tl-row{display:flex;align-items:center;gap:10px;margin-block:7px}
-.tl-name{width:88px;flex-shrink:0;color:var(--text-2);font-weight:700;font-size:12px;text-align:right}
-.tl-track{position:relative;flex:1;height:22px;background:var(--card-2);border-radius:8px;overflow:hidden}
-.tl-seg{position:absolute;top:3px;bottom:3px;border-radius:6px;opacity:.9}
-.tl-seg.ov-gold{background:var(--gold);opacity:.55}
-.tl-seg.ov-teal{background:var(--teal);opacity:.45}
-.tl-seg.ov-pink{background:var(--pink);opacity:.45}
-.tl-now{position:absolute;top:0;bottom:0;width:2px;background:var(--text);z-index:3;opacity:.85}
-.legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
-.legend .chip i{width:10px;height:10px;border-radius:3px;display:inline-block}
+/* ---------- Market Hours (v2.5) ---------- */
+.mh-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.mh-title{display:flex;flex-direction:column;gap:2px}
+.mh-title h3{margin:0}
+.mh-sub{font-size:11px;color:var(--text-3)}
+.mh-ctl{margin-inline-start:auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.mh-lbl{font-size:11.5px;color:var(--text-3);font-weight:700}
+.mh-sel{width:auto;min-width:180px;max-width:240px;padding-block:8px;font-size:12.5px;font-weight:700}
+.mh-fmt{display:flex;align-items:center;gap:8px}
+.mh-body{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:14px;direction:ltr;align-items:start}
+.mh-tl{direction:ltr;min-width:0}
+.mh-daystrip{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 12px;background:var(--card-2);border:1px solid var(--border-soft);border-radius:11px;margin-bottom:10px}
+.mh-daystrip b{font-size:12.5px;font-weight:800}
+.mh-chip{background:var(--gold-soft);border:1px solid rgba(233,182,74,.3);color:var(--gold);border-radius:8px;padding:3px 9px;font-size:11px;font-weight:800}
+.mh-chip2{background:var(--card);border:1px solid var(--border-soft);color:var(--text-2);border-radius:8px;padding:3px 9px;font-size:11px;font-weight:700}
+.mh-axis{position:relative;height:32px;margin-bottom:4px}
+.mh-ico{position:absolute;top:0;width:13px;height:13px;color:var(--text-3);transform:translateX(-50%)}
+.mh-ico svg{width:100%;height:100%;display:block}
+.mh-hours span{position:absolute;bottom:0;transform:translateX(-50%);font-size:9.5px;font-weight:700;color:var(--text-3);font-feature-settings:"tnum" 1}
+.mh-hours span.mh-e0{transform:none}
+.mh-hours span.mh-e24{transform:translateX(-100%)}
+.mh-lanes{position:relative;background:var(--card-2);border:1px solid var(--border-soft);border-radius:13px;padding:10px 0;display:flex;flex-direction:column;gap:7px;overflow:hidden}
+.mh-grid{position:absolute;inset:0;pointer-events:none}
+.mh-grid i{position:absolute;top:0;bottom:0;width:1px;background:var(--border);opacity:.45}
+.mh-lane{position:relative;height:34px}
+.mh-bar{position:absolute;top:0;bottom:0;border-radius:8px;display:flex;align-items:center;gap:7px;padding:0 9px;font-size:11.5px;font-weight:800;overflow:hidden;white-space:nowrap;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);transition:opacity .4s}
+.mh-bar.sec{opacity:.32;box-shadow:none}
+.mh-bar b{font-weight:800;letter-spacing:.2px}
+.mh-fl{width:21px;height:14px;border-radius:3px;overflow:hidden;flex:none;box-shadow:0 0 0 1px rgba(0,0,0,.3)}
+.mh-fl svg{width:100%;height:100%;display:block}
+.mh-st{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:700;opacity:.95}
+.mh-stdot{width:7px;height:7px;border-radius:99px;background:rgba(0,0,0,.35);flex:none}
+.mh-stdot.on{background:#ffffff;box-shadow:0 0 5px rgba(255,255,255,.7)}
+.mh-now{position:absolute;top:-5px;bottom:0;width:2px;background:var(--gold);pointer-events:none;z-index:3;transition:left .9s linear;border-radius:2px}
+.mh-now i{position:absolute;top:-1px;left:50%;transform:translateX(-50%);width:9px;height:9px;border-radius:99px;background:var(--gold);box-shadow:0 0 0 3px rgba(233,182,74,.22)}
+.mh-act{display:flex;align-items:flex-end;gap:2px;height:42px;margin-top:10px;overflow:hidden}
+.mh-act i{flex:1;min-width:1px;max-width:5px;background:var(--text-3);opacity:.16;border-radius:1px 1px 0 0;transition:opacity .3s,background .3s}
+.mh-act i.cur{background:var(--gold);opacity:1;box-shadow:0 0 6px rgba(233,182,74,.45)}
+.mh-actcap{display:flex;justify-content:space-between;gap:10px;font-size:10px;color:var(--text-3);margin-top:6px}
+.mh-cards{direction:rtl;display:flex;flex-direction:column;gap:10px}
+.mhc{background:var(--card-2);border:1px solid var(--border-soft);border-radius:12px;padding:11px 12px;display:flex;flex-direction:column;gap:6px;border-inline-start:3px solid var(--c,var(--gold))}
+.mhc-top{display:flex;align-items:center;gap:8px}
+.mhc-flag{width:24px;height:16px;border-radius:4px;overflow:hidden;flex:none;box-shadow:0 0 0 1px rgba(128,128,128,.3)}
+.mhc-flag svg{width:100%;height:100%;display:block}
+.mhc-city{font-size:13.5px;font-weight:800}
+.mhc-st{margin-inline-start:auto;font-size:10px;font-weight:800;padding:2px 8px;border-radius:7px}
+.mhc-st.on{color:#34d399;background:rgba(52,211,153,.12)}
+.mhc-st.off{color:var(--text-3);background:var(--card)}
+.mhc-dot{width:8px;height:8px;border-radius:99px;background:#6b7280;flex:none}
+.mhc-dot.on{background:#34d399;box-shadow:0 0 6px rgba(52,211,153,.5)}
+.mhc-time{font-size:20px;font-weight:800;font-feature-settings:"tnum" 1;font-variant-numeric:tabular-nums;letter-spacing:.3px;line-height:1.1}
+.mhc-meta{display:flex;justify-content:space-between;gap:8px;font-size:11px;color:var(--text-3);font-weight:700}
+.mhc-cd{font-size:11.5px;color:var(--text-2);background:var(--card);border:1px dashed var(--border);border-radius:9px;padding:6px 9px;text-align:center;font-weight:700}
+.mhc-cd b{color:var(--gold);font-feature-settings:"tnum" 1}
+@media(max-width:1020px){.mh-body{grid-template-columns:1fr}.mh-cards{display:grid;grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.mh-cards{grid-template-columns:1fr}.mh-hours span.mh-ho{display:none}.mhc-time{font-size:17px}.mh-ctl{width:100%;margin-inline-start:0}.mh-sel{flex:1;min-width:0;max-width:none}.mh-bar{font-size:10.5px;padding:0 7px;gap:5px}.mh-fl{width:18px;height:12px}.mh-bar b{overflow:hidden;text-overflow:ellipsis}.mh-bar .mh-st{flex-shrink:0}}
+.mh-bar.mh-nost .mh-st{display:none}
 .ov-row{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:10px 4px;border-bottom:1px dashed var(--border-soft);font-size:13px}
 .ov-row:last-child{border-bottom:none}
 .ov-name{font-weight:800}
@@ -255,10 +311,23 @@ button.chip:hover{border-color:var(--gold);color:var(--gold)}
 .cl-item.done span{text-decoration:line-through;color:var(--text-3)}
 .cl-del{background:none;border:none;color:var(--text-3);font-size:15px}
 .cl-del:hover{color:var(--red)}
-.jr-wrap{position:relative}
-.jr{width:100%;min-height:190px;resize:vertical;line-height:2}
-.jr-saved{position:absolute;bottom:10px;inset-inline-end:14px;font-size:11px;color:var(--green);opacity:0;transition:.3s;pointer-events:none}
-.jr-saved.show{opacity:1}
+/* ---------- ژورنال معاملات (v2.4) ---------- */
+.tr-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:14px}
+.tr-stat{background:var(--card-2);border:1px solid var(--border-soft);border-radius:12px;padding:10px 6px;text-align:center}
+.tr-stat b{display:block;font-size:16px;font-weight:800;font-feature-settings:"tnum" 1;line-height:1.4}
+.tr-stat span{font-size:10.5px;color:var(--text-3);font-weight:700}
+.tr-stat.hl b{color:var(--gold)}
+@media(max-width:640px){.tr-stats{grid-template-columns:repeat(2,1fr)}}
+.tr-item{background:var(--card-2);border:1px solid var(--border-soft);border-radius:13px;padding:12px 14px;margin-bottom:10px;animation:fadeUp .25s ease}
+.tr-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.tr-sym{font-weight:800;font-size:14px;letter-spacing:.5px;background:var(--gold-soft);color:var(--gold);padding:3px 11px;border-radius:9px;direction:ltr}
+.tr-res{margin-inline-start:auto;font-size:15px;font-weight:800;font-feature-settings:"tnum" 1}
+.tr-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px;font-size:12px;color:var(--text-2);align-items:center}
+.tr-meta .sep{color:var(--text-3);opacity:.6}
+.tr-note{margin-top:9px;font-size:12.5px;color:var(--text-2);background:var(--card);border-radius:10px;padding:8px 11px;border:1px dashed var(--border-soft);white-space:pre-wrap}
+.tr-when{margin-top:9px;font-size:11px;color:var(--text-3);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.tr-list{max-height:430px;overflow-y:auto;padding-inline-end:4px}
+.tr-empty{text-align:center;padding:22px 10px;color:var(--text-3);font-size:13px;border:1px dashed var(--border);border-radius:13px}
 
 /* ---------- world clock ---------- */
 .wc-row{display:flex;justify-content:space-between;align-items:center;padding:8px 3px;border-bottom:1px dashed var(--border-soft);font-size:13.5px}
@@ -269,22 +338,38 @@ button.chip:hover{border-color:var(--gold);color:var(--gold)}
 .next-ev{display:flex;flex-direction:column;gap:7px;align-items:flex-start}
 .next-ev .ttl{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 
-/* ---------- candle countdown ---------- */
+/* ---------- شمارش معکوس کندل (v2.4) ---------- */
 .chip.on{background:var(--gold-soft);border-color:rgba(233,182,74,.45);color:var(--gold)}
-.ct-card{padding:14px}
-.ct-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.ct-lbl{font-weight:800;font-size:15px;color:var(--gold);letter-spacing:.5px}
-.ct-x{margin-inline-start:auto;background:none;border:1px solid var(--border);color:var(--text-3);width:26px;height:26px;border-radius:8px;font-size:15px;line-height:1;padding:0;flex-shrink:0}
+.ct-card{padding:16px;display:flex;flex-direction:column}
+.ct-head{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.ct-badge{display:inline-flex;align-items:center;gap:7px;padding:5px 12px;border-radius:11px;font-weight:800;font-size:13.5px;letter-spacing:.5px;border:1px solid}
+.ct-badge svg{width:14px;height:14px;flex-shrink:0}
+.ct-pct{margin-inline-start:auto;font-size:11.5px;color:var(--text-3);font-weight:800;font-feature-settings:"tnum" 1}
+.ct-x{background:none;border:1px solid var(--border);color:var(--text-3);width:26px;height:26px;border-radius:8px;font-size:15px;line-height:1;padding:0;flex-shrink:0;margin-inline-start:4px}
 .ct-x:hover{color:var(--red);border-color:var(--red)}
-.ct-cd{font-size:clamp(1.25rem,4.5vw,1.6rem);font-weight:800;font-feature-settings:"tnum" 1;line-height:1.4;margin-bottom:9px}
-.ct-range{font-size:11.5px;color:var(--text-3);margin-top:7px}
-.ct-cap{font-size:11px;color:var(--text-3);margin-top:3px}
-.ct-card.closed{border-color:rgba(251,191,36,.35)}
-.ct-card.closed .ct-cd{color:var(--amber)}
-.ct-mini{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px dashed var(--border-soft);font-size:13px}
-.ct-mini:last-child{border-bottom:none}
-.ct-mini .bar{flex:1;height:6px}
-.ct-mini b{font-weight:800;white-space:nowrap}
+.ct-card.closed{border-style:dashed}
+.ct-bar{height:9px;background:var(--card-2);border-radius:99px;overflow:hidden;margin-bottom:11px}
+.ct-bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--gold),var(--pink));transition:width .95s linear}
+.ct-foot{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;font-size:11.5px;color:var(--text-3);text-align:center}
+.ct-foot b{color:var(--text-2);font-weight:700}
+.ct-card.closed .ring-center b{color:var(--amber)}
+.ct-card.closed .ring-center span{color:var(--amber)}
+/* داشبورد: نوار تایمر ترمینالی کندل */
+.cndbar{display:flex;flex-wrap:wrap;gap:9px}
+.cndst{position:relative;display:inline-flex;align-items:center;gap:9px;padding:8px 12px;background:var(--card-2);border:1px solid var(--border-soft);border-radius:11px;cursor:pointer;font-family:inherit;font-size:inherit;color:var(--text);line-height:1;min-width:0;transition:border-color .2s,box-shadow .2s}
+.cndst:hover{border-color:rgba(233,182,74,.35)}
+.cndst:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.cndst.on{border-color:rgba(233,182,74,.55);box-shadow:0 0 0 1px rgba(233,182,74,.14),0 0 16px rgba(233,182,74,.12)}
+.cndst.on::after{content:'';position:absolute;top:-3px;inset-inline-start:15px;width:6px;height:6px;border-radius:99px;background:var(--gold);box-shadow:0 0 7px rgba(233,182,74,.85)}
+.cnd-tfl{font-size:12.5px;font-weight:800;letter-spacing:.3px;color:var(--text-2)}
+.cndst.on .cnd-tfl{color:var(--gold)}
+.cnr{width:18px;height:18px;flex:none;transform:rotate(-90deg)}
+.cnr circle{fill:none;stroke-width:3}
+.cnr .cnr-track{stroke:rgba(128,128,128,.28)}
+.cnr .cnr-prog{stroke-linecap:round;transition:stroke-dashoffset 1s linear}
+.cnd-cd{font-size:13px;font-weight:700;font-feature-settings:"tnum" 1;font-variant-numeric:tabular-nums;white-space:nowrap;direction:ltr;color:var(--text)}
+@media(max-width:560px){.cndbar{gap:7px}.cndst{padding:7px 10px;gap:7px;border-radius:10px}.cnd-cd{font-size:12px}.cnr{width:16px;height:16px}}
+.cnd-closed{display:flex;align-items:center;justify-content:center;gap:12px;padding:16px 14px;background:var(--card-2);border:1px dashed var(--border);border-radius:13px;flex-wrap:wrap;text-align:center}
 .mini-install{padding:8px 14px;font-size:12.5px;border-radius:11px;flex-shrink:0}
 
 /* ---------- v2.3: همگام‌سازی با چارت بروکر ---------- */
@@ -337,18 +422,15 @@ button.chip:hover{border-color:var(--gold);color:var(--gold)}
 .ht-info{display:flex;flex-direction:column;align-items:flex-start;line-height:1.35}
 .ht-info b{font-size:13.5px;font-weight:800;white-space:nowrap;font-feature-settings:"tnum" 1}
 .ht-info span{font-size:9.5px;color:var(--text-3);font-weight:700;white-space:nowrap}
-.ringwrap{position:relative;width:118px;height:118px;margin:6px auto 10px}
-.ringwrap .ring-track{stroke-width:9}
-.ringwrap .ring-prog{stroke-width:9;transition:stroke-dashoffset .95s linear}
+.ringwrap{position:relative;width:148px;height:148px;margin:8px auto 12px}
+.ringwrap .ring-track{stroke-width:10}
+.ringwrap .ring-prog{stroke-width:10;transition:stroke-dashoffset .95s linear}
 .ringwrap.urgent{animation:ringPulse 1.1s infinite}
 .ringwrap.urgent .ring-prog{stroke:var(--red)}
 @keyframes ringPulse{0%,100%{filter:drop-shadow(0 0 1px rgba(248,113,113,.15))}50%{filter:drop-shadow(0 0 9px rgba(248,113,113,.5))}}
 .ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;pointer-events:none;text-align:center}
-.ring-center b{font-size:15px;font-weight:800;font-feature-settings:"tnum" 1;line-height:1.25}
-.ring-center span{font-size:9.5px;color:var(--text-3);font-weight:700}
-.ct-foot{display:flex;flex-direction:column;gap:4px;align-items:center;font-size:11px;color:var(--text-3);text-align:center}
-.ct-foot b{color:var(--text-2);font-weight:700}
-.ct-card.closed .ring-center b{color:var(--amber)}
+.ring-center b{font-size:19px;font-weight:800;font-feature-settings:"tnum" 1;line-height:1.25}
+.ring-center span{font-size:10px;color:var(--text-3);font-weight:700}
 .scard,.s-mini{position:relative;overflow:hidden}
 .flagbg{pointer-events:none}
 .flagbg svg{width:100%;height:100%;display:block}
@@ -412,10 +494,11 @@ select.inp.mini{width:auto;min-width:160px;padding-block:8px;padding-inline-star
   <!-- ================= داشبورد ================= -->
   <section class="tab-section active" id="tab-dashboard">
     <div class="grid grid-hero">
-      <div class="card">
+      <div class="card tzcard">
+        <div class="flagbg" id="tzFlag" aria-hidden="true"></div>
         <div class="clock-top">
           <span class="lbl" style="margin:0">ساعت محلی شما</span>
-          <span class="chip" id="userTz">...</span>
+          <span class="chip tz-chip" id="userTz">...</span>
         </div>
         <div class="bigclock" id="bigClock" dir="ltr">--:--:--</div>
         <div class="clock-sub">
@@ -465,14 +548,23 @@ select.inp.mini{width:auto;min-width:160px;padding-block:8px;padding-inline-star
     </div>
     <div class="grid grid-2" id="sessionCards"></div>
     <div class="card" style="margin-top:14px">
-      <h3>نمای ۲۴ ساعته بازار (GMT)</h3>
-      <div class="tl" id="timeline"></div>
-      <div class="legend">
-        <span class="chip"><i style="background:#2dd4bf"></i>سیدنی</span>
-        <span class="chip"><i style="background:#f472b6"></i>توکیو</span>
-        <span class="chip"><i style="background:#facc15"></i>لندن</span>
-        <span class="chip"><i style="background:#fb923c"></i>نیویورک</span>
-        <span class="chip"><i style="background:var(--gold);opacity:.6"></i>هم‌پوشانی</span>
+      <div class="mh-top">
+        <div class="mh-title">
+          <h3 dir="ltr">Market Hours</h3>
+          <span class="mh-sub">ساعت جهانی بازارها و سشن‌های معاملاتی — زنده و همگام با منطقه زمانی انتخابی</span>
+        </div>
+        <div class="mh-ctl">
+          <label class="mh-lbl" for="mhTz">منطقه زمانی</label>
+          <select class="inp mh-sel" id="mhTz" aria-label="منطقه زمانی تایم‌لاین بازارها"></select>
+          <div class="mh-fmt">
+            <span class="mh-lbl">۲۴ ساعته</span>
+            <label class="sw"><input type="checkbox" id="mh24" checked aria-label="نمایش ۲۴ ساعته یا ۱۲ ساعته"><i></i></label>
+          </div>
+        </div>
+      </div>
+      <div class="mh-body">
+        <section class="mh-tl" id="mhTl" aria-label="تایم‌لاین ۲۴ ساعته بازارهای جهانی"></section>
+        <aside class="mh-cards" id="mhCards" aria-label="کارت‌های بازارهای جهانی"></aside>
       </div>
     </div>
     <div class="card" style="margin-top:14px">
@@ -708,13 +800,26 @@ select.inp.mini{width:auto;min-width:160px;padding-block:8px;padding-inline-star
         <button class="btn btn-ghost small" id="clReset" style="margin-top:10px">بازگرداندن چک‌لیست پیش‌فرض</button>
       </div>
       <div class="card">
-        <h3>ژورنال معامله‌گری</h3>
-        <p class="muted small" style="margin-bottom:10px">یادداشت آزاد شما؛ به‌صورت خودکار ذخیره می‌شود.</p>
-        <div class="jr-wrap">
-          <textarea class="inp jr" id="journal" placeholder="امروز بازار... / تحلیل هفتگی / درس‌های این هفته..."></textarea>
-          <span class="jr-saved" id="jrSaved">ذخیره شد</span>
-        </div>
-        <button class="btn btn-danger small" id="jrClear" style="margin-top:10px">پاک کردن ژورنال</button>
+        <div class="clock-top" style="margin-bottom:10px"><h3 style="margin:0">ژورنال معاملات</h3><button class="btn btn-ghost small" type="button" id="trClearAll">پاک کردن همه</button></div>
+        <p class="muted small" style="margin-bottom:12px">هر معامله را با جزئیات ثبت کنید؛ تاریخ و ساعت ثبت به‌صورت خودکار ذخیره می‌شود.</p>
+        <div class="tr-stats" id="trStats"></div>
+        <form id="trForm">
+          <div class="fgrid">
+            <label class="fld">نماد<input class="inp" id="trSym" list="trSyms" required maxlength="20" placeholder="EURUSD" style="direction:ltr;text-align:left"></label>
+            <datalist id="trSyms"><option value="EURUSD"></option><option value="GBPUSD"></option><option value="USDJPY"></option><option value="AUDUSD"></option><option value="USDCAD"></option><option value="XAUUSD"></option><option value="GBPJPY"></option><option value="EURJPY"></option></datalist>
+            <label class="fld">جهت معامله
+              <select class="inp" id="trDir"><option value="buy">خرید (Buy)</option><option value="sell">فروش (Sell)</option></select>
+            </label>
+            <label class="fld">حجم (لات)<input class="inp num" id="trLots" type="number" min="0" step="0.01" placeholder="0.5"></label>
+            <label class="fld">قیمت ورود<input class="inp num" id="trEntry" type="number" step="any" placeholder="1.0850"></label>
+            <label class="fld">قیمت خروج<input class="inp num" id="trExit" type="number" step="any" placeholder="1.0910"></label>
+            <label class="fld">نتیجه (دلار، زیان = منفی)<input class="inp num" id="trRes" type="number" step="any" placeholder="120 یا -80"></label>
+            <label class="fld">استراتژی / تگ<input class="inp" id="trTag" maxlength="30" placeholder="اسکالپ، پرایس‌اکشن، خبری..."></label>
+            <label class="fld span2">یادداشت<textarea class="inp" id="trNote" rows="2" maxlength="500" placeholder="دلیل ورود، درس‌ها، نکات روانی..."></textarea></label>
+          </div>
+          <button class="btn" type="submit" style="margin-top:12px;width:100%">ثبت معامله در ژورنال</button>
+        </form>
+        <div class="tr-list" id="trList" style="margin-top:14px"></div>
       </div>
     </div>
   </section>
@@ -724,6 +829,10 @@ select.inp.mini{width:auto;min-width:160px;padding-block:8px;padding-inline-star
     <div class="grid grid-2">
       <div class="card">
         <h3>نمایش و زمان</h3>
+        <div class="set-row">
+          <span class="info"><b>منطقه زمانی ساعت</b><span>ساعت بزرگ داشبورد، تاریخ‌ها و مقایسه‌های «به وقت شما» بر اساس این منطقه نمایش داده می‌شود؛ پس‌زمینه کارت ساعت هم نماد همان منطقه است</span></span>
+          <select class="inp mini" id="setTz"></select>
+        </div>
         <div class="set-row">
           <span class="info"><b>تم برنامه</b><span>حالت تاریک یا روشن</span></span>
           <select class="inp mini" id="setTheme"><option value="dark">تاریک</option><option value="light">روشن</option></select>
@@ -770,7 +879,7 @@ select.inp.mini{width:auto;min-width:160px;padding-block:8px;padding-inline-star
       <div class="card">
         <h3>درباره ترید دسک</h3>
         <div class="about-list">
-          <div class="set-row"><span class="info"><b>نسخه</b><span>ترید دسک ۲٫۳ — تک‌فایل و بدون وابستگی خارجی</span></span><span class="chip">PWA</span></div>
+          <div class="set-row"><span class="info"><b>نسخه</b><span>ترید دسک ۲٫۴ — ژورنال معاملات، منطقه زمانی انتخابی، رینگ گرادیانی و ساعت جهانی دایره‌ای</span></span><span class="chip">PWA</span></div>
           <div class="set-row"><span class="info"><b>ذخیره‌سازی</b><span>همه داده‌ها فقط روی همین دستگاه ذخیره می‌شود (بدون سرور)</span></span><span class="bdg on">محلی</span></div>
           <div class="set-row"><span class="info"><b>حالت آفلاین</b><span>پس از اولین بازدید، برنامه بدون اینترنت هم کامل اجرا می‌شود</span></span><span class="bdg on">فعال</span></div>
           <div class="set-row"><span class="info"><b>نصب روی گوشی</b><span>اندروید: منوی مرورگر ← Install app — iOS: دکمه Share ← Add to Home Screen</span></span><button class="btn btn-ghost small" id="setInstall" hidden type="button">نصب</button></div>
@@ -783,7 +892,7 @@ select.inp.mini{width:auto;min-width:160px;padding-block:8px;padding-inline-star
 </main>
 
 <footer class="ftr">
-  <div class="container">ترید دسک نسخه ۲٫۳ — همگام‌سازی دقیق کندل با چارت بروکر، تنظیمات، پشتیبان‌گیری، تایمر دایره‌ای و پرچم سشن‌ها؛ تماماً افلاین (PWA)؛ داده‌ها فقط روی دستگاه شما.</div>
+  <div class="container">ترید دسک نسخه ۲٫۴ — ژورنال معاملات با ثبت خودکار تاریخ، منطقه زمانی انتخابی، شمارش گرادیانی کندل و ساعت جهانی دایره‌ای؛ تماماً افلاین (PWA)؛ داده‌ها فقط روی دستگاه شما.</div>
 </footer>
 
 <nav class="mnav" id="mTabs" aria-label="بخش‌ها">
@@ -880,8 +989,31 @@ const SESSIONS=[
  {id:'newyork',code:'NYC', name:'نیویورک', tz:'America/New_York', start:780,  end:1320, dstShift:60, color:'#fb923c'}
 ];
 const byId={};SESSIONS.forEach(s=>byId[s.id]=s);
-const TZ_FA={'Asia/Tehran':'تهران','Asia/Dubai':'دبی','Europe/London':'لندن','America/New_York':'نیویورک','Asia/Tokyo':'توکیو','Australia/Sydney':'سیدنی','Europe/Berlin':'فرانکفورت'};
+const TZ_FA={'Asia/Tehran':'تهران','Asia/Dubai':'دبی','Europe/Istanbul':'استانبول','Europe/Moscow':'مسکو','Africa/Cairo':'قاهره','Europe/London':'لندن','Europe/Berlin':'فرانکفورت','Europe/Zurich':'زوریخ','Europe/Paris':'پاریس','America/New_York':'نیویورک','America/Chicago':'شیکاگو','America/Toronto':'تورنتو','America/Los_Angeles':'لس‌آنجلس','Asia/Tokyo':'توکیو','Asia/Seoul':'سئول','Asia/Shanghai':'شانگهای','Asia/Hong_Kong':'هنگ‌کنگ','Asia/Singapore':'سنگاپور','Asia/Kolkata':'دهلی نو','Asia/Jakarta':'جاکارتا','Australia/Sydney':'سیدنی','Pacific/Auckland':'اوکلند','UTC':'ساعت جهانی'};
 const CITIES=[['نیویورک','America/New_York'],['لندن','Europe/London'],['توکیو','Asia/Tokyo'],['سیدنی','Australia/Sydney'],['دبی','Asia/Dubai'],['فرانکفورت','Europe/Berlin']];
+/* ---------- منطقه زمانی انتخابی (v2.4) ---------- */
+const TZLIST=[['auto','ساعت دستگاه (خودکار)'],['Asia/Tehran','تهران'],['Asia/Dubai','دبی'],['Europe/Istanbul','استانبول'],['Europe/Moscow','مسکو'],['Africa/Cairo','قاهره'],['Europe/London','لندن'],['Europe/Berlin','فرانکفورت'],['Europe/Zurich','زوریخ'],['Europe/Paris','پاریس'],['America/New_York','نیویورک'],['America/Chicago','شیکاگو'],['America/Toronto','تورنتو'],['America/Los_Angeles','لس‌آنجلس'],['Asia/Tokyo','توکیو'],['Asia/Seoul','سئول'],['Asia/Shanghai','شانگهای'],['Asia/Hong_Kong','هنگ‌کنگ'],['Asia/Singapore','سنگاپور'],['Asia/Kolkata','دهلی نو'],['Asia/Jakarta','جاکارتا'],['Australia/Sydney','سیدنی'],['Pacific/Auckland','اوکلند'],['UTC','ساعت جهانی (UTC)']];
+const TZ_FLAG={'Asia/Tehran':'ir','Asia/Dubai':'ae','Europe/Istanbul':'tr','Europe/Moscow':'ru','Africa/Cairo':'eg','Europe/London':'gb','Europe/Berlin':'de','Europe/Zurich':'ch','Europe/Paris':'fr','America/New_York':'us','America/Chicago':'us','America/Toronto':'ca','America/Los_Angeles':'us','Asia/Tokyo':'jp','Asia/Seoul':'kr','Asia/Shanghai':'cn','Asia/Hong_Kong':'hk','Asia/Singapore':'sg','Asia/Kolkata':'in','Asia/Jakarta':'id','Australia/Sydney':'au','Pacific/Auckland':'nz','UTC':null};
+let TZSEL=store.get('fx_tz','auto');
+const deviceTZ=(Intl.DateTimeFormat().resolvedOptions().timeZone)||'UTC';
+function curTZ(){try{return (TZSEL==='auto')?deviceTZ:TZSEL;}catch(e){return 'UTC';}}
+let _tzFmt=null,_tzFmtKey='';
+const TZ_WD={Sun:0,Mon:1,Tue:2,Wed:3,Thu:4,Fri:5,Sat:6};
+function tzParts(ts){const tz=curTZ();
+ if(_tzFmtKey!==tz){_tzFmtKey=tz;_tzFmt=null;
+  try{_tzFmt=new Intl.DateTimeFormat('en-US',{timeZone:tz,hourCycle:'h23',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',weekday:'short'});}catch(e){_tzFmt=null;}}
+ if(!_tzFmt){const d=new Date(ts);return{y:d.getFullYear(),mo:d.getMonth()+1,d:d.getDate(),h:d.getHours(),mi:d.getMinutes(),s:d.getSeconds(),wd:d.getDay()};}
+ const p={};_tzFmt.formatToParts(new Date(ts)).forEach(function(q){p[q.type]=q.value;});
+ return{y:+p.year,mo:+p.month,d:+p.day,h:+p.hour,mi:+p.minute,s:+p.second,wd:TZ_WD[p.weekday]||0};}
+function tzFlagKey(){return TZ_FLAG[curTZ()]||null;}
+function renderTzFlag(){const el=$('#tzFlag');if(!el)return;const k=tzFlagKey();el.innerHTML=k?(FLAG[k]||FLAG.globe):FLAG.globe;el.style.color='var(--text-2)';
+ const mf=$('#userTzFlag');if(mf)mf.innerHTML=k?(FLAG[k]||FLAG.globe):FLAG.globe;}
+function renderTzChip(){const el=$('#userTz');if(!el)return;
+ const t=curTZ();const name=TZ_FA[t]||t;const off=tzOffsetMin(CTX.nowMs,t);
+ const sg=off>=0?'+':'−';const oh=Math.floor(Math.abs(off)/60),om=Math.abs(off)%60;
+ const k=tzFlagKey();
+ el.innerHTML=(k?'<span class="mini-flag" id="userTzFlag" aria-hidden="true">'+(FLAG[k]||FLAG.globe)+'</span>':'<span class="mini-flag" id="userTzFlag" aria-hidden="true">'+FLAG.globe+'</span>')
+  +'<span>'+esc(name)+' · UTC'+sg+fa(oh)+(om?':'+fa(PAD2(om)):'')+'</span>';}
 
 /* ---------- پرچم‌های کشورها (SVG داخلی، بدون فایل خارجی) ---------- */
 function starPts(cx,cy,ro,ri,n,rot){rot=(rot==null)?-90:rot;let p='';
@@ -909,6 +1041,47 @@ FLAG.us=(function(){let st='',stripes='';
  return '<svg viewBox="0 0 320 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">'+stripes+'<rect width="130" height="108" fill="#3C3B6E"/>'+st+'</svg>';})();
 const SESSION_FLAG={sydney:'au',tokyo:'jp',london:'gb',newyork:'us'};
 function flagBg(id){return '<div class="flagbg" aria-hidden="true">'+(FLAG[SESSION_FLAG[id]]||'')+'</div>';}
+
+/* ---------- پرچم مناطق زمانی (v2.4) ---------- */
+function hstripes(cols){const n=cols.length,h=200/n;
+ return cols.map((c,i)=>'<rect y="'+(i*h).toFixed(2)+'" width="320" height="'+(h+0.4).toFixed(2)+'" fill="'+c+'"/>').join('');}
+function vstripes(cols){const n=cols.length,w=320/n;
+ return cols.map((c,i)=>'<rect x="'+(i*w).toFixed(2)+'" width="'+(w+0.4).toFixed(2)+'" height="200" fill="'+c+'"/>').join('');}
+function svgWrap(inner){return '<svg viewBox="0 0 320 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">'+inner+'</svg>';}
+FLAG.ir=svgWrap(hstripes(['#239f40','#ffffff','#da0000'])
+ +'<rect x="146" y="86" width="28" height="28" transform="rotate(45 160 100)" fill="#da0000"/>');
+FLAG.ae=svgWrap(hstripes(['#00732f','#ffffff','#000000'])+'<rect width="90" height="200" fill="#ff0000"/>');
+FLAG.tr=svgWrap('<rect width="320" height="200" fill="#E30A17"/>'
+ +'<circle cx="122" cy="100" r="40" fill="#ffffff"/><circle cx="138" cy="100" r="32" fill="#E30A17"/>'
+ +'<polygon fill="#ffffff" points="'+starPts(182,100,17,7,5)+'"/>');
+FLAG.ru=svgWrap(hstripes(['#ffffff','#0039a6','#d52b1e']));
+FLAG.eg=svgWrap(hstripes(['#ce1126','#ffffff','#000000'])
+ +'<path d="M146 112 L160 84 L174 112 L165 112 L160 96 L155 112 Z" fill="#c09300"/>');
+FLAG.de=svgWrap(hstripes(['#000000','#dd0000','#ffce00']));
+FLAG.ch=svgWrap('<rect width="320" height="200" fill="#da291c"/>'
+ +'<rect x="137" y="48" width="46" height="104" fill="#ffffff"/><rect x="108" y="77" width="104" height="46" fill="#ffffff"/>');
+FLAG.fr=svgWrap(vstripes(['#0055a4','#ffffff','#ef4135']));
+FLAG.ca=svgWrap(vstripes(['#d80621','#ffffff','#d80621'])
+ +'<polygon fill="#d80621" points="'+starPts(160,100,30,12,6,0)+'"/>');
+FLAG.kr=svgWrap('<rect width="320" height="200" fill="#ffffff"/>'
+ +'<circle cx="160" cy="100" r="34" fill="#cd2e3a"/><path d="M126 100 A34 34 0 0 0 194 100 Z" fill="#0047a0"/>'
+ +'<circle cx="143" cy="100" r="17" fill="#cd2e3a"/><circle cx="177" cy="100" r="17" fill="#0047a0"/>');
+FLAG.cn=svgWrap('<rect width="320" height="200" fill="#de2910"/>'
+ +'<polygon fill="#ffde00" points="'+starPts(58,52,28,11,5)+'"/>'
+ +[[104,22],[118,48],[118,80],[104,106]].map(function(s){return '<polygon fill="#ffde00" points="'+starPts(s[0],s[1],9,3.6,5)+'"/>';}).join(''));
+FLAG.hk=svgWrap('<rect width="320" height="200" fill="#de2910"/>'
+ +[0,72,144,216,288].map(function(a){return '<ellipse cx="160" cy="80" rx="11" ry="21" fill="#ffffff" transform="rotate('+a+' 160 100)"/>';}).join('')
+ +'<circle cx="160" cy="100" r="7" fill="#de2910"/>');
+FLAG.sg=svgWrap('<rect width="320" height="200" fill="#ffffff"/><rect width="320" height="100" fill="#ed2939"/>'
+ +'<circle cx="80" cy="50" r="30" fill="#ffffff"/><circle cx="92" cy="46" r="25" fill="#ed2939"/>'
+ +[[118,32],[130,44],[124,58],[112,58],[106,44]].map(function(s){return '<polygon fill="#ffffff" points="'+starPts(s[0],s[1],6,2.4,5)+'"/>';}).join(''));
+FLAG.in=svgWrap(hstripes(['#ff9933','#ffffff','#138808'])
+ +'<circle cx="160" cy="100" r="15" fill="none" stroke="#000080" stroke-width="3"/><circle cx="160" cy="100" r="3.5" fill="#000080"/>');
+FLAG.id=svgWrap(hstripes(['#ce1126','#ffffff']));
+FLAG.nz=svgWrap('<rect width="320" height="200" fill="#012169"/><g transform="scale(0.4)">'+unionJack(320,200)+'</g>'
+ +[[206,54],[252,86],[212,128],[262,150]].map(function(s){return '<polygon fill="#cc142b" stroke="#ffffff" stroke-width="2" points="'+starPts(s[0],s[1],11,4.5,5)+'"/>';}).join(''));
+FLAG.globe=svgWrap('<rect width="320" height="200" fill="none"/>'
+ +'<g fill="none" stroke="currentColor" stroke-width="4" opacity=".4"><circle cx="160" cy="100" r="62"/><ellipse cx="160" cy="100" rx="28" ry="62"/><ellipse cx="160" cy="100" rx="62" ry="24"/><line x1="98" y1="100" x2="222" y2="100"/></g>');
 
 /* ---------- وضعیت کلی ---------- */
 let activeTab='dashboard';
@@ -953,7 +1126,7 @@ function goldenState(){const segs=overlaps().lonny;
 /* ---------- قالب‌بندی ---------- */
 function fmtT(ts,tz){try{return new Intl.DateTimeFormat('fa-IR',{hour:'2-digit',minute:'2-digit',hourCycle:'h23',timeZone:tz||undefined}).format(new Date(ts));}catch(e){return '—';}}
 const fmtGMT=ts=>fmtT(ts,'UTC');
-const fmtLocal=ts=>fmtT(ts);
+const fmtLocal=ts=>fmtT(ts,curTZ());
 function gmtRange(w){return fa(PAD2(Math.floor(w.st/60)))+':'+fa(PAD2(w.st%60))+' – '+fa(PAD2(Math.floor(w.en/60)))+':'+fa(PAD2(w.en%60));}
 function cdText(ms){if(ms==null)return '—';ms=Math.max(0,ms);
  const t=Math.floor(ms/1e3),d=Math.floor(t/86400),h=Math.floor(t%86400/3600),m=Math.floor(t%3600/60),s=t%60;
@@ -988,15 +1161,115 @@ $$('[data-tab]').forEach(b=>b.addEventListener('click',()=>setTab(b.dataset.tab)
 document.addEventListener('click',e=>{const g=e.target.closest('[data-goto]');if(g)setTab(g.dataset.goto);});
 
 /* ---------- رندر ثابت‌ها ---------- */
-function renderStatics(){renderTimeline();renderOverlaps();}
-function renderTimeline(){
- const axis='<div class="tl-axis">'+[0,3,6,9,12,15,18,21,24].map(h=>'<span>'+fa(PAD2(h))+'</span>').join('')+'</div>';
- const rows=SESSIONS.map(s=>{const w=getWin(s);const segs=w.wraps?[[w.st,1440],[0,w.en]]:[[w.st,w.en]];
-  const segHtml=segs.map(g=>'<span class="tl-seg" style="left:'+(g[0]/1440*100)+'%;width:'+((g[1]-g[0])/1440*100)+'%;background:'+s.color+'"></span>').join('');
-  return '<div class="tl-row"><span class="tl-name" style="color:'+s.color+'">'+s.name+'</span><div class="tl-track">'+segHtml+'<span class="tl-now" hidden></span></div></div>';}).join('');
- const ov=overlaps();
- const ovRow=(segs,cls,label)=>'<div class="tl-row"><span class="tl-name muted">'+label+'</span><div class="tl-track">'+segs.map(g=>'<span class="tl-seg '+cls+'" style="left:'+(g[0]/1440*100)+'%;width:'+((g[1]-g[0])/1440*100)+'%"></span>').join('')+'<span class="tl-now" hidden></span></div></div>';
- $('#timeline').innerHTML=axis+rows+ovRow(ov.lonny,'ov-gold','LON + NYC')+ovRow(ov.sydto,'ov-teal','SYD + TYO')+ovRow(ov.tolon,'ov-pink','TYO + LON');}
+function renderStatics(){renderMH();renderOverlaps();}
+
+/* ---------- Market Hours (v2.5) ---------- */
+let MHTZ=store.get('fx_mhtz','auto');
+let MH24=store.get('fx_mh24',true);
+if(MHTZ==null||MHTZ==='')MHTZ='auto';
+function mhTZ(){try{return (MHTZ==='auto')?deviceTZ:MHTZ;}catch(e){return 'UTC';}}
+let _mhF={};
+function mhFmt(ts,tz,l,opts){const k=tz+'|'+l+'|'+JSON.stringify(opts);
+ if(!_mhF[k]){try{_mhF[k]=new Intl.DateTimeFormat(l,Object.assign({timeZone:tz},opts));}catch(e){return null;}}
+ try{return _mhF[k].format(new Date(ts));}catch(e){return '—';}}
+function mhTimeStr(ts,tz){return mhFmt(ts,tz,'fa-IR',{hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:MH24?'h23':'h12'})||'—';}
+function mhDateStr(ts,tz){return mhFmt(ts,tz,'fa-IR-u-ca-gregory',{weekday:'long',day:'numeric',month:'long'})||'—';}
+function mhOffStr(ts,tz){const o=tzOffsetMin(ts,tz);const sg=o>=0?'+':'−';const oh=Math.floor(Math.abs(o)/60),om=Math.abs(o)%60;
+ return 'UTC'+sg+fa(oh)+(om?':'+fa(PAD2(om)):'');}
+function mhDayStartMs(){const tz=mhTZ();const off=tzOffsetMin(CTX.nowMs,tz);
+ return Math.floor((CTX.nowMs+off*6e4)/864e5)*864e5-off*6e4;}
+function mhWallMin(ts,dayStart){return (ts-dayStart)/6e4;}
+/* بازه باز بودن کل بازار فارکس (یکشنبه ۲۲:۰۰ تا جمعه ۲۲:۰۰ GMT) — هم‌مبنای marketInfo */
+function mhMktInterval(t){const d=new Date(t);
+ const day0=Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate())-d.getUTCDay()*864e5;
+ const o=day0+1320*6e4,c=o+7200*6e4;
+ if(t>=o&&t<c)return[o,c];
+ return t<o?[o-7*864e5,c-7*864e5]:[o+7*864e5,c+7*864e5];}
+/* رخدادهای سشن در چند روز پیرامون، با برخورد با تعطیلی آخر هفته */
+function mhOccs(s){const w=getWin(s);const dur=((w.wraps?(1440-w.st)+w.en:(w.en-w.st)))*6e4;const out=[];
+ for(let k=-1;k<=3;k++){const a=CTX.utcDayStart+k*864e5+w.st*6e4;const b=a+dur;
+  const iv=mhMktInterval(a);const s2=Math.max(a,iv[0]),e2=Math.min(b,iv[1]);
+  if(e2-s2>6e4)out.push([s2,e2]);}
+ return out.sort((x,y)=>x[0]-y[0]);}
+function mhState(s){const n=CTX.nowMs;const ocs=mhOccs(s);
+ for(let i=0;i<ocs.length;i++){if(n>=ocs[i][0]&&n<ocs[i][1])return{open:true,ts:ocs[i][1]-n};}
+ for(let i=0;i<ocs.length;i++){if(ocs[i][0]>n)return{open:false,ts:ocs[i][0]-n};}
+ return{open:false,ts:null};}
+function mhSegs(s,dayStart){const segs=[];
+ mhOccs(s).forEach(function(oc){let a=mhWallMin(oc[0],dayStart),b=mhWallMin(oc[1],dayStart);
+  a=Math.max(0,a);b=Math.min(1440,b);if(b-a>0.5)segs.push([a,b]);});
+ return segs;}
+function lm(hex){const n=parseInt(hex.slice(1),16);return (0.299*((n>>16)&255)+0.587*((n>>8)&255)+0.114*(n&255))/255;}
+const MH_SUN='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><line x1="12" y1="2.5" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="21.5"/><line x1="2.5" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="21.5" y2="12"/><line x1="5.3" y1="5.3" x2="7" y2="7"/><line x1="17" y1="17" x2="18.7" y2="18.7"/><line x1="18.7" y1="5.3" x2="17" y2="7"/><line x1="7" y1="17" x2="5.3" y2="18.7"/></svg>';
+const MH_MOON='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.2 14.2A8.8 8.8 0 0 1 9.8 3.8 8.8 8.8 0 1 0 20.2 14.2Z"/></svg>';
+let _mhSig='';
+function buildMhSelects(){const sel=document.getElementById('mhTz');
+ if(sel&&!sel.options.length){TZLIST.forEach(function(t){const o=document.createElement('option');o.value=t[0];o.textContent=t[1];sel.appendChild(o);});}
+ if(sel&&sel.value!==MHTZ)sel.value=MHTZ;
+ const cb=document.getElementById('mh24');if(cb)cb.checked=!!MH24;}
+function renderMH(){buildMhSelects();const el=$('#mhTl');if(!el)return;
+ const tz=mhTZ();const dayStart=mhDayStartMs();
+ const dayLbl=mhFmt(CTX.nowMs,tz,'fa-IR-u-ca-gregory',{weekday:'long',day:'numeric',month:'long',year:'numeric'})||'—';
+ const sig=tz+'|'+DST+'|'+dayLbl+'|'+CTX.utcDayStart;
+ if(_mhSig===sig)return;_mhSig=sig;
+ let hours='';for(let h=0;h<=24;h++){hours+='<span class="'+(h%2?'mh-ho':'')+(h===0?' mh-e0':(h===24?' mh-e24':''))+'" style="left:'+(h/24*100)+'%">'+(h===24?'۲۴':fa(PAD2(h)))+'</span>';}
+ let grid='';for(let h=1;h<24;h++){grid+='<i style="left:'+(h/24*100)+'%"></i>';}
+ const nowWall=Math.max(0,Math.min(1440,(CTX.nowMs-dayStart)/6e4));
+ const lanes=SESSIONS.map(function(s){
+  const segs=mhSegs(s,dayStart);const st=mhState(s);
+  const fg=lm(s.color)>0.7?'#171207':'#ffffff';
+  let pri=-1,best=-1;
+  segs.forEach(function(g,i){if(nowWall>=g[0]&&nowWall<g[1])pri=i;if(best<0||(g[1]-g[0])>(segs[best][1]-segs[best][0]))best=i;});
+  if(pri<0)pri=best;
+  const bars=segs.map(function(g,i){
+   const wPct=(g[1]-g[0])/1440*100,lPct=g[0]/1440*100;
+   const lbl=i===pri&&wPct>=9;
+   const inner=lbl?'<span class="mh-fl">'+(FLAG[SESSION_FLAG[s.id]]||'')+'</span><b>'+esc(s.name)+'</b><span class="mh-st"><i class="mh-stdot'+(st.open?' on':'')+'" id="mhsd-'+s.id+'"></i><b id="mhs-'+s.id+'">'+(st.open?'باز':'بسته')+'</b></span>':'';
+   return '<div class="mh-bar'+(i===pri?'':' sec')+(wPct<16?' mh-nost':'')+'" style="left:'+lPct.toFixed(3)+'%;width:'+wPct.toFixed(3)+'%;background:'+s.color+';color:'+fg+'" title="'+esc(s.name)+' — '+(st.open?'باز':'بسته')+'">'+inner+'</div>';}).join('');
+  return '<div class="mh-lane">'+bars+'</div>';}).join('');
+ const counts=new Array(96).fill(0);
+ SESSIONS.forEach(function(s){mhSegs(s,dayStart).forEach(function(g){
+  for(let k=0;k<96;k++){const m=k*15+7.5;if(m>=g[0]&&m<g[1])counts[k]++;}});});
+ let act='';for(let k=0;k<96;k++){const c=counts[k];
+  act+='<i data-k="'+k+'" style="height:'+(c?Math.round(c/4*100):4)+'%;opacity:'+(c?(0.3+0.16*c).toFixed(2):'0.14')+'"></i>';}
+ el.innerHTML='<div class="mh-daystrip"><b>'+dayLbl+'</b><span class="mh-chip">'+esc(TZ_FA[tz]||tz)+'</span><span class="mh-chip2" dir="ltr">'+mhOffStr(CTX.nowMs,tz)+'</span></div>'
+  +'<div class="mh-axis"><span class="mh-ico" style="left:0.9%">'+MH_MOON+'</span><span class="mh-ico" style="left:50%">'+MH_SUN+'</span><div class="mh-hours">'+hours+'</div></div>'
+  +'<div class="mh-lanes"><div class="mh-grid">'+grid+'</div>'+lanes+'<div class="mh-now" id="mhNow" data-p="0" style="left:'+(nowWall/1440*100).toFixed(3)+'%"><i></i></div></div>'
+  +'<div class="mh-act" id="mhAct" data-cur="-1">'+act+'</div>'
+  +'<div class="mh-actcap"><span>تراکم فعالیت — تعداد سشن‌های باز در هر ربع ساعت</span><span>میله طلایی = هم‌اکنون</span></div>';}
+function renderMHCards(){const el=$('#mhCards');if(!el||el.dataset.built)return;
+ el.innerHTML=SESSIONS.map(function(s){
+  return '<div class="mhc" id="mhc-'+s.id+'" style="--c:'+s.color+'">'
+  +'<div class="mhc-top"><span class="mhc-flag">'+(FLAG[SESSION_FLAG[s.id]]||'')+'</span><b class="mhc-city">'+esc(s.name)+'</b>'
+  +'<span class="mhc-st off" id="mhc-st-'+s.id+'">—</span><span class="mhc-dot" id="mhc-dot-'+s.id+'"></span></div>'
+  +'<b class="mhc-time" id="mhc-time-'+s.id+'" dir="ltr">--:--:--</b>'
+  +'<div class="mhc-meta"><span id="mhc-date-'+s.id+'">—</span><span dir="ltr" id="mhc-off-'+s.id+'">—</span></div>'
+  +'<div class="mhc-cd" id="mhc-cd-'+s.id+'">—</div></div>';}).join('');
+ el.dataset.built='1';}
+function tickMH(){renderMHCards();renderMH();
+ const tz=mhTZ();const dayStart=mhDayStartMs();
+ const now=Math.max(0,Math.min(1440,(CTX.nowMs-dayStart)/6e4));
+ const nd=$('#mhNow');
+ if(nd){const pct=now/1440*100;const prev=parseFloat(nd.dataset.p||'0');
+  if(Math.abs(pct-prev)>30){nd.style.transition='none';nd.style.left=pct+'%';void nd.offsetWidth;nd.style.transition='';}
+  else{nd.style.left=pct+'%';}
+  nd.dataset.p=String(pct);}
+ const k=Math.min(95,Math.floor(now/15));const act=$('#mhAct');
+ if(act&&act.dataset.cur!==String(k)){const old=act.querySelector('i.cur');if(old)old.classList.remove('cur');
+  const cur=act.children[k];if(cur)cur.classList.add('cur');act.dataset.cur=String(k);}
+ SESSIONS.forEach(function(s){const st=mhState(s);const tzs=s.tz;
+  const t=$('#mhc-time-'+s.id);if(t)t.textContent=mhTimeStr(CTX.nowMs,tzs);
+  const d=$('#mhc-date-'+s.id);if(d)d.textContent=mhDateStr(CTX.nowMs,tzs);
+  const o=$('#mhc-off-'+s.id);if(o)o.textContent=mhOffStr(CTX.nowMs,tzs);
+  const cd=$('#mhc-cd-'+s.id);if(cd)cd.innerHTML=st.ts==null?'—':((st.open?'بسته شدن تا ':'باز شدن تا ')+'<b>'+cdText(st.ts)+'</b>');
+  const dot=$('#mhc-dot-'+s.id);if(dot)dot.classList.toggle('on',st.open);
+  const stEl=$('#mhc-st-'+s.id);if(stEl){stEl.textContent=st.open?'باز':'بسته';stEl.className='mhc-st '+(st.open?'on':'off');}
+  const bs=$('#mhs-'+s.id);if(bs)bs.textContent=st.open?'باز':'بسته';
+  const sd=$('#mhsd-'+s.id);if(sd)sd.classList.toggle('on',st.open);});}
+$('#mhTz').addEventListener('change',function(){MHTZ=this.value||'auto';store.set('fx_mhtz',MHTZ);
+ renderMH();tickMH();toast('منطقه زمانی پنل: '+(MHTZ==='auto'?'ساعت دستگاه':(TZ_FA[mhTZ()]||mhTZ())));});
+$('#mh24').addEventListener('change',function(){MH24=!!this.checked;store.set('fx_mh24',MH24);tickMH();});
+
 function renderOverlaps(){const ov=overlaps();
  const mk=(n,segs,c)=>{if(!segs.length)return '';
   const a=segs[0][0],b=segs[0][1],e=(b%1440);
@@ -1032,8 +1305,7 @@ function dashNextEvent(){const el=$('#dashNextEvent');if(!el)return;const e=next
 function cityInfo(tz){try{const f=new Intl.DateTimeFormat('fa-IR',{timeZone:tz,hourCycle:'h23',hour:'2-digit',minute:'2-digit',weekday:'long'});
  const p=f.formatToParts(new Date(CTX.nowMs));const g=t=>{const x=p.find(q=>q.type===t);return x?x.value:'';};return{time:g('hour')+':'+g('minute'),dow:g('weekday')};}catch(e){return{time:'—',dow:''};}}
 function renderWorld(){const el=$('#dashWorld');if(!el)return;
- const utz=Intl.DateTimeFormat().resolvedOptions().timeZone||'';
- const rows=[{name:(TZ_FA[utz]||utz||'محل شما')+' (شما)',tz:utz}].concat(CITIES.map(c=>({name:c[0],tz:c[1]})));
+ const rows=[{name:(TZ_FA[curTZ()]||curTZ())+' (شما)',tz:curTZ()}].concat(CITIES.map(c=>({name:c[0],tz:c[1]})));
  el.innerHTML=rows.map(r=>{const ci=cityInfo(r.tz);return '<div class="wc-row"><span class="wc-city">'+r.name+'</span><span class="wc-dow">'+ci.dow+'</span><b dir="ltr">'+ci.time+'</b></div>';}).join('');}
 
 /* ---------- سشن‌ها (تب) ---------- */
@@ -1048,7 +1320,7 @@ function renderSessionCards(){const el=$('#sessionCards');if(!el)return;
   +'<div class="scard-info">'+(i.open
     ?'<span class="small muted">پیشرفت سشن: <b>'+fa(Math.round(i.prog*100))+'٪</b></span><span class="small muted">پایان تا '+cdText(i.closeTs-CTX.nowMs)+'</span>'
     :'<span class="small muted">شروع تا <b>'+cdText(i.nextOpenTs-CTX.nowMs)+'</b></span>')+'</div></div>';}).join('');}
-function tickTimeline(){const x=CTX.utcMins/1440*100;$$('.tl-now').forEach(el=>{el.hidden=false;el.style.left=x+'%';});}
+function tickTimeline(){}
 
 /* ---------- شمارش معکوس کندل ---------- */
 const TF_CORE=[{id:'m1',label:'M1',u:'m',v:1},{id:'m5',label:'M5',u:'m',v:5},{id:'m15',label:'M15',u:'m',v:15},{id:'m30',label:'M30',u:'m',v:30},{id:'h1',label:'H1',u:'h',v:1},{id:'h4',label:'H4',u:'h',v:4},{id:'d1',label:'D1',u:'d',v:1},{id:'w1',label:'W1',u:'w',v:1},{id:'mn1',label:'MN',u:'mn',v:1}];
@@ -1104,30 +1376,72 @@ function fmtCdRing(ms){ms=Math.max(0,ms);const t=Math.floor(ms/1e3),d=Math.floor
  if(d>0)return fa(d)+' روز و '+ltr(fa(PAD2(h))+':'+fa(PAD2(m)));
  return ltr(fa(PAD2(h))+':'+fa(PAD2(m))+':'+fa(PAD2(t%60)));}
 function tfFoot(i,tf){return i.closed
- ?'<span class="chip">بازار بسته</span><span>شروع مجدد تا <b>'+fmtCdSec(i.remain)+'</b></span>'
- :'<span>کندل بعدی: <b dir="ltr">'+fmtBroker(i.close,tf.u)+'</b></span><span>پیشرفت '+fa(Math.round(i.prog*100))+'٪</span>';}
-function ctCard(tf){const i=tfInfo(tf);const R=51,C=2*Math.PI*R;
+ ?'<span class="chip">بازار بسته — شروع تا <b>'+fmtCdSec(i.remain)+'</b></span>'
+ :'<span class="chip">کندل بعدی: <b dir="ltr">'+fmtBroker(i.close,tf.u)+'</b></span>';}
+function tfColor(tf){if(tf.u==='m')return '#e9b64a';if(tf.u==='h')return '#f472b6';if(tf.u==='d')return '#2dd4bf';if(tf.u==='w')return '#34d399';return '#fb923c';}
+const CND_ICO='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="7" y1="3" x2="7" y2="21"/><rect x="4" y="9" width="6" height="7" rx="1" fill="currentColor" stroke="none"/><line x1="17" y1="4" x2="17" y2="20"/><rect x="14" y="7" width="6" height="8" rx="1" fill="currentColor" stroke="none"/></svg>';
+function ctCard(tf){const i=tfInfo(tf);
  const frac=i.closed?0:Math.max(0,Math.min(1,1-i.prog));
- return '<div class="card ct-card'+(i.closed?' closed':'')+'"><div class="ct-head"><span class="ct-lbl">'+tf.label+'</span><button type="button" class="ct-x" data-tf="'+tf.id+'" aria-label="حذف تایم‌فریم">&times;</button></div>'
- +'<div class="ringwrap" id="rw-'+tf.id+'"><svg viewBox="0 0 118 118" aria-hidden="true"><circle class="ring-track" cx="59" cy="59" r="51"/><circle class="ring-prog" id="ra-'+tf.id+'" cx="59" cy="59" r="51" stroke-dasharray="'+C.toFixed(1)+'" stroke-dashoffset="'+(C*(1-frac)).toFixed(1)+'"/></svg>'
- +'<span class="ring-center"><b id="rc-'+tf.id+'">'+(i.closed?'—':fmtCdRing(i.remain))+'</b><span>'+(i.closed?'تعطیل':'باقی‌مانده')+'</span></span></div>'
+ const pct=i.closed?0:Math.round(i.prog*100);
+ const c=tfColor(tf);const g='ctg-'+tf.id;const RC=2*Math.PI*64;
+ return '<div class="card ct-card'+(i.closed?' closed':'')+'">'
+ +'<div class="ct-head"><span class="ct-badge" style="color:'+c+';background:'+c+'1f;border-color:'+c+'55">'+CND_ICO+'<b>'+tf.label+'</b></span>'
+ +'<span class="ct-pct" id="rp-'+tf.id+'">'+fa(pct)+'٪</span>'
+ +'<button type="button" class="ct-x" data-tf="'+tf.id+'" aria-label="حذف تایم‌فریم">&times;</button></div>'
+ +'<div class="ringwrap" id="rw-'+tf.id+'"><svg viewBox="0 0 148 148" aria-hidden="true">'
+ +'<defs><linearGradient id="'+g+'" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="'+c+'"/><stop offset="100%" stop-color="#e9b64a"/></linearGradient></defs>'
+ +'<circle class="ring-track" cx="74" cy="74" r="64"/>'
+ +'<circle class="ring-prog" id="ra-'+tf.id+'" cx="74" cy="74" r="64" stroke="url(#'+g+')" stroke-dasharray="'+RC.toFixed(2)+'" stroke-dashoffset="'+(RC*(1-frac)).toFixed(2)+'"/></svg>'
+ +'<span class="ring-center"><b id="rc-'+tf.id+'">'+(i.closed?'—':fmtCdRing(i.remain))+'</b><span>'+(i.closed?'بازار بسته':'مانده تا بسته شدن')+'</span></span></div>'
+ +'<div class="ct-bar"><i id="rb-'+tf.id+'" style="width:'+pct+'%"></i></div>'
  +'<div class="ct-foot" id="rf-'+tf.id+'">'+tfFoot(i,tf)+'</div></div>';}
 function renderTfCards(){const el=$('#tfCards');if(!el)return;el.innerHTML=TFS.map(ctCard).join('');}
 function tickTfCards(){TFS.forEach(tf=>{const i=tfInfo(tf);const rw=$('#rw-'+tf.id);if(!rw)return;
- const card=rw.closest('.ct-card'),arc=$('#ra-'+tf.id),ctr=$('#rc-'+tf.id),foot=$('#rf-'+tf.id);
- const C=2*Math.PI*51,frac=i.closed?0:Math.max(0,Math.min(1,1-i.prog));
- arc.style.strokeDashoffset=(C*(1-frac)).toFixed(2);
+ const card=rw.closest('.ct-card'),arc=$('#ra-'+tf.id),ctr=$('#rc-'+tf.id),foot=$('#rf-'+tf.id),bar=$('#rb-'+tf.id),pct=$('#rp-'+tf.id);
+ const RC=2*Math.PI*64,frac=i.closed?0:Math.max(0,Math.min(1,1-i.prog));
+ const pv=i.closed?0:Math.round(i.prog*100);
+ arc.style.strokeDashoffset=(RC*(1-frac)).toFixed(2);
  rw.classList.toggle('urgent',!i.closed&&i.prog>0.9);
  card.classList.toggle('closed',!!i.closed);
  ctr.innerHTML=i.closed?'—':fmtCdRing(i.remain);
+ bar.style.width=pv+'%';
+ pct.textContent=fa(pv)+'٪';
  foot.innerHTML=tfFoot(i,tf);});}
+let _cndSig='';
+const CND_RC=2*Math.PI*8;
+const DASH_PAL={m1:'#34d399',m5:'#38bdf8',m15:'#a78bfa',m30:'#fb923c',h1:'#2dd4bf',h4:'#c084fc',d1:'#f472b6',w1:'#e9b64a',mn1:'#f87171'};
+const DASH_FALLBACK=['#34d399','#38bdf8','#a78bfa','#fb923c','#2dd4bf','#c084fc','#f472b6','#e9b64a','#f87171'];
 function dashCandles(){const el=$('#dashCandles');if(!el)return;const mk=marketInfo();
- if(!mk.open){el.innerHTML='<div class="ct-mini"><span class="chip">بازار</span><span class="muted small" style="flex:1">بازار فارکس بسته است</span><b class="mid">'+cdText(mk.chgTs-CTX.nowMs)+'</b></div>';return;}
- el.innerHTML=TFS.slice(0,6).map(tf=>{const i=tfInfo(tf);const R=11,C=2*Math.PI*11;
-  const frac=i.closed?0:Math.max(0,Math.min(1,1-i.prog));
-  return '<div class="ct-mini"><span class="chip">'+tf.label+'</span>'
-  +'<svg class="mini-ring" viewBox="0 0 26 26" aria-hidden="true"><circle class="ring-track" cx="13" cy="13" r="11" stroke-width="3"/><circle class="ring-prog" cx="13" cy="13" r="11" stroke-width="3" stroke-dasharray="'+C.toFixed(1)+'" stroke-dashoffset="'+(C*(1-frac)).toFixed(1)+'"/></svg>'
-  +'<b>'+fmtCdSec(i.remain)+'</b></div>';}).join('');}
+ if(!mk.open){if(_cndSig!=='closed'){_cndSig='closed';
+   el.innerHTML='<div class="cnd-closed"><span class="chip">بازار فارکس بسته است</span><b class="mid">'+cdText(mk.chgTs-CTX.nowMs)+'</b><span class="muted small">تا شروع مجدد</span></div>';}
+  else{const b=el.querySelector('.cnd-closed b');if(b)b.innerHTML=cdText(mk.chgTs-CTX.nowMs);}
+  return;}
+ const list=TFS.slice(0,6);const sig=list.map(t=>t.id).join(',');
+ if(_cndSig!==sig){_cndSig=sig;
+  el.innerHTML='<div class="cndbar">'+list.map(function(tf,idx){
+   const i=tfInfo(tf);const prog=i.closed?0:Math.max(0,Math.min(1,i.prog));
+   const c=DASH_PAL[tf.id]||DASH_FALLBACK[idx%DASH_FALLBACK.length];
+   return '<button type="button" class="cndst" data-tf="'+tf.id+'" aria-pressed="false" title="انتخاب '+tf.label+' برای تایمر هدر">'
+   +'<span class="cnd-tfl">'+tf.label+'</span>'
+   +'<svg class="cnr" viewBox="0 0 20 20" aria-hidden="true"><circle class="cnr-track" cx="10" cy="10" r="8"/>'
+   +'<circle class="cnr-prog" id="cnr-'+tf.id+'" cx="10" cy="10" r="8" stroke="'+c+'" stroke-dasharray="'+CND_RC.toFixed(2)+'" stroke-dashoffset="'+(CND_RC*(1-prog)).toFixed(2)+'"/></svg>'
+   +'<b class="cnd-cd" id="cnc-'+tf.id+'">'+(i.closed?'—':fmtCdRing(i.remain))+'</b></button>';}).join('')+'</div>';
+  markDashActive();}
+ list.forEach(function(tf){const i=tfInfo(tf);
+  const a=$('#cnr-'+tf.id),c=$('#cnc-'+tf.id);if(!a||!c)return;
+  const prog=i.closed?0:Math.max(0,Math.min(1,i.prog));
+  a.style.strokeDashoffset=(CND_RC*(1-prog)).toFixed(2);
+  c.innerHTML=fmtCdRing(i.remain);});}
+function markDashActive(){const bar=document.querySelector('.cndbar');if(!bar)return;
+ const hid=(headTf()||{}).id;
+ bar.querySelectorAll('.cndst').forEach(function(b){const on=b.dataset.tf===hid;
+  b.classList.toggle('on',on);b.setAttribute('aria-pressed',on?'true':'false');});}
+$('#dashCandles').addEventListener('click',e=>{const b=e.target.closest('.cndst');if(!b)return;
+ if(b.dataset.tf===HEADTF)return;
+ HEADTF=b.dataset.tf;store.set('fx_headtf',HEADTF);markDashActive();
+ const sel=document.getElementById('setHeadTf');
+ if(sel){for(let k=0;k<sel.options.length;k++){if(sel.options[k].value===HEADTF){sel.value=HEADTF;break;}}}
+ tickHeader();});
 function renderTfChips(){$('#tfChips').innerHTML=TF_QUICK.map(q=>{const id=q[0]+q[1];const lbl=(q[0]==='mn')?'MN':q[0].toUpperCase()+q[1];
  return '<button type="button" class="chip'+(TFS.some(t=>t.id===id)?' on':'')+'" data-u="'+q[0]+'" data-v="'+q[1]+'">'+lbl+'</button>';}).join('');}
 function toggleTf(u,v){const id=u+v;const idx=TFS.findIndex(t=>t.id===id);const lbl=(u==='mn')?'MN':u.toUpperCase()+v;
@@ -1301,12 +1615,63 @@ $('#clList').addEventListener('click',e=>{const b=e.target.closest('.cl-del');if
 $('#clReset').addEventListener('click',()=>{if(confirm('چک‌لیست به حالت پیش‌فرض برگردد؟ (موارد فعلی حذف می‌شوند)')){
  CL=CL_DEFAULT.map((t,i)=>({id:'c'+i+'-'+Date.now(),text:t,done:false}));store.set('fx_checklist',CL);renderCL();toast('چک‌لیست بازنشانی شد');}});
 
-/* ---------- ژورنال ---------- */
-const jr=$('#journal');jr.value=store.get('fx_journal','');
-let jrT;
-jr.addEventListener('input',()=>{clearTimeout(jrT);jrT=setTimeout(()=>{store.set('fx_journal',jr.value);
- const s=$('#jrSaved');s.classList.add('show');setTimeout(()=>s.classList.remove('show'),1300);},400);});
-$('#jrClear').addEventListener('click',()=>{if(confirm('کل ژورنال پاک شود؟')){jr.value='';store.set('fx_journal','');toast('ژورنال پاک شد');}});
+/* ---------- ژورنال معاملات (v2.4) ---------- */
+let TRADES=store.get('fx_trades',[]);
+if(!Array.isArray(TRADES))TRADES=[];
+function saveTrades(){store.set('fx_trades',TRADES);}
+function pipSizeOf(sym){sym=String(sym||'').toUpperCase();
+ if(sym.indexOf('XAU')>=0||sym.indexOf('GOLD')>=0)return 0.1;
+ if(sym.indexOf('XAG')>=0||sym.indexOf('SILVER')>=0)return 0.01;
+ if(sym.indexOf('JPY')>=0)return 0.01;
+ return 0.0001;}
+function pipsOf(t){if(!(t.entry>0&&t.exit>0))return null;const ps=pipSizeOf(t.sym);if(!ps)return null;
+ return (t.exit-t.entry)/ps*(t.dir==='sell'?-1:1);}
+function trStats(){const res=TRADES.map(t=>+t.res||0);
+ const wins=res.filter(v=>v>0).length,losses=res.filter(v=>v<0).length;
+ const net=res.reduce((a,b)=>a+b,0);
+ const withRes=wins+losses;const wr=withRes?Math.round(wins/withRes*100):null;
+ return{n:TRADES.length,wins:wins,losses:losses,net:net,wr:wr};}
+function renderTrStats(){const s=trStats();const el=$('#trStats');if(!el)return;
+ el.innerHTML='<div class="tr-stat"><b>'+fa(s.n)+'</b><span>معامله ثبت‌شده</span></div>'
+ +'<div class="tr-stat"><b><span class="pos">'+fa(s.wins)+'</span> / <span class="neg">'+fa(s.losses)+'</span></b><span>برد / باخت</span></div>'
+ +'<div class="tr-stat"><b>'+(s.wr==null?'—':fa(s.wr)+'٪')+'</b><span>وین‌ریت</span></div>'
+ +'<div class="tr-stat hl"><b class="'+(s.net>0?'pos':s.net<0?'neg':'')+'">'+(s.net>0?'+':s.net<0?'−':'')+faNum(Math.abs(s.net),2)+'$</b><span>مجموع سود / زیان</span></div>';}
+function trRow(t){const P=tzParts(t.ts);const j=toJalaali(P.y,P.mo,P.d);
+ const win=+t.res>0,loss=+t.res<0;const pips=pipsOf(t);
+ return '<div class="tr-item">'
+ +'<div class="tr-head"><span class="tr-sym">'+esc(t.sym)+'</span>'
+ +'<span class="bdg '+(t.dir==='buy'?'on':'off')+'">'+(t.dir==='buy'?'خرید':'فروش')+'</span>'
+ +(t.res!=null&&t.res!==''&&!isNaN(+t.res)
+   ?'<b class="tr-res '+(win?'pos':'neg')+'">'+(win?'+':'−')+faNum(Math.abs(+t.res),2)+'$</b>'
+   :'<span class="chip">بدون نتیجه</span>')
+ +'<button class="ev-del tr-del" data-id="'+esc(String(t.id))+'" aria-label="حذف معامله">حذف</button></div>'
+ +'<div class="tr-meta">'
+  +(t.lots>0?'<span>'+faNum(t.lots,2)+' لات</span><span class="sep">·</span>':'')
+  +(t.entry>0?'<span>ورود '+ltr(faSig(t.entry))+'</span>':'')
+  +(t.entry>0&&t.exit>0?'<span class="sep">→</span><span>خروج '+ltr(faSig(t.exit))+'</span>':'')
+  +(pips!=null?'<span class="sep">·</span><span class="'+(pips>=0?'pos':'neg')+'">'+faNum(Math.abs(pips),1)+' پیپ</span>':'')
+  +(t.tag?'<span class="sep">·</span><span class="chip">'+esc(t.tag)+'</span>':'')
+ +'</div>'
+ +(t.note?'<div class="tr-note">'+esc(t.note)+'</div>':'')
+ +'<div class="tr-when"><span>ثبت شده در ساعت '+ltr(fa(PAD2(P.h))+':'+fa(PAD2(P.mi)))+'</span><span class="sep">·</span><span>'+DOW[dowIdx(P.wd)]+' '+fa(j.jd)+' '+JM[j.jm-1]+' '+fa(j.jy)+'</span></div>'
+ +'</div>';}
+function renderTrades(){const el=$('#trList');if(!el)return;
+ if(!TRADES.length){el.innerHTML='<div class="tr-empty">هنوز معامله‌ای ثبت نشده است؛ اولین معامله خود را با فرم بالا ثبت کنید.</div>';}
+ else{el.innerHTML=TRADES.slice().sort((a,b)=>b.ts-a.ts).map(trRow).join('');}
+ renderTrStats();}
+$('#trForm').addEventListener('submit',function(e){e.preventDefault();
+ const sym=$('#trSym').value.trim();if(!sym){toast('نماد را وارد کنید');return;}
+ const num=id=>{const v=$('#'+id).value;return v===''||v==null?null:+v;};
+ TRADES.push({id:String(Date.now())+'-'+Math.floor(Math.random()*1e4),ts:Date.now(),
+  sym:sym.toUpperCase(),dir:$('#trDir').value,lots:num('trLots'),entry:num('trEntry'),exit:num('trExit'),
+  res:num('trRes'),tag:$('#trTag').value.trim()||'',note:$('#trNote').value.trim()||''});
+ saveTrades();renderTrades();this.reset();$('#trDir').value='buy';
+ toast('معامله ثبت شد — تاریخ و ساعت ذخیره شد');});
+$('#trList').addEventListener('click',function(e){const b=e.target.closest('.tr-del');if(!b)return;
+ if(confirm('این معامله از ژورنال حذف شود؟')){TRADES=TRADES.filter(t=>String(t.id)!==b.dataset.id);saveTrades();renderTrades();toast('معامله حذف شد');}});
+$('#trClearAll').addEventListener('click',function(){
+ if(!TRADES.length){toast('معامله‌ای برای حذف نیست');return;}
+ if(confirm('همه '+fa(TRADES.length)+' معامله ثبت‌شده حذف شود؟ این کار بازگشت‌پذیر نیست.')){TRADES=[];saveTrades();renderTrades();toast('ژورنال معاملات پاک شد');}});
 
 /* ---------- ابزارها ---------- */
 function need(el){el.innerHTML='<span class="muted small">برای محاسبه، همه مقادیر را وارد کنید.</span>';}
@@ -1368,15 +1733,21 @@ $('#dstSw').checked=DST;
 $('#dstSw').addEventListener('change',e=>{DST=e.target.checked;store.set('fx_dst',DST);$('#setDst').checked=DST;
  renderStatics();computeCtx();tick();toast('تنظیم ساعت تابستانی اعمال شد');});
 
-/* ---------- تنظیمات و پشتیبان‌گیری (v2.3) ---------- */
+/* ---------- تنظیمات و پشتیبان‌گیری (v2.4) ---------- */
 function renderSettings(){
  const th=$('#setTheme');if(th)th.value=document.documentElement.getAttribute('data-theme')||'dark';
  $('#setDst').checked=DST;
  renderCalignControls();
+ const tzSel=$('#setTz');
+ if(tzSel&&!tzSel.options.length){TZLIST.forEach(function(t){const o=document.createElement('option');o.value=t[0];o.textContent=t[1];tzSel.appendChild(o);});}
+ if(tzSel)tzSel.value=TZSEL;
  const sel=$('#setHeadTf');
  sel.innerHTML=TFS.map(t=>'<option value="'+t.id+'">'+t.label+'</option>').join('');
  const ht=headTf();sel.value=ht?ht.id:'';}
 $('#setTheme').addEventListener('change',e=>{const t=e.target.value;store.set('fx_theme',t);applyTheme(t);});
+$('#setTz').addEventListener('change',function(){TZSEL=this.value;store.set('fx_tz',TZSEL);
+ renderTzFlag();tick();
+ toast('منطقه زمانی: '+(TZSEL==='auto'?'ساعت دستگاه':(TZ_FA[curTZ()]||curTZ())));});
 $('#setDst').addEventListener('change',e=>{DST=e.target.checked;store.set('fx_dst',DST);$('#dstSw').checked=DST;
  renderStatics();computeCtx();tick();toast('تنظیم ساعت تابستانی اعمال شد');});
 const setCalModeEl=document.getElementById('setCalignMode');
@@ -1388,10 +1759,10 @@ function tickHeader(){const tf=headTf(),arc=$('#htArc');if(!tf||!arc)return;cons
  $('#htCd').innerHTML=fmtCdSec(i.remain);
  $('#htLbl').textContent=(i.closed?'بازار بسته':'تا بسته شدن')+' · '+tf.label;
  $('#hdrTimer').title='چیدمان بروکر: '+calignLabel()+(CSKEW?' · تنظیم ثانیه: '+(CSKEW>0?'+':'−')+fa(Math.abs(CSKEW)):'');}
-const BK_KEYS=['fx_theme','fx_dst','fx_tfs','fx_calign','fx_calign_mode','fx_calign_auto','fx_skew','fx_headtf','fx_events','fx_checklist','fx_journal','fx_tab'];
+const BK_KEYS=['fx_theme','fx_dst','fx_tz','fx_mhtz','fx_mh24','fx_tfs','fx_calign','fx_calign_mode','fx_calign_auto','fx_skew','fx_headtf','fx_events','fx_checklist','fx_trades','fx_tab'];
 function backupObj(){const data={};BK_KEYS.forEach(k=>{const v=localStorage.getItem(k);
  if(v!=null){try{data[k]=JSON.parse(v);}catch(err){data[k]=v;}}});
- return{app:'tradedesk',ver:'2.3',exportedAt:new Date().toISOString(),data:data};}
+ return{app:'tradedesk',ver:'2.4',exportedAt:new Date().toISOString(),data:data};}
 function applyBackup(obj){if(!obj||typeof obj!=='object'||!obj.data||typeof obj.data!=='object')throw new Error('invalid');
  const d=obj.data;let n=0;BK_KEYS.forEach(k=>{if(Object.prototype.hasOwnProperty.call(d,k)){store.set(k,d[k]);n++;}});
  if(!n)throw new Error('empty');return n;}
@@ -1429,16 +1800,17 @@ $('#bkReset').addEventListener('click',function(){
 
 /* ---------- حلقه اصلی ---------- */
 function tick(){
- const n=new Date(CTX.nowMs);
- $('#bigClock').innerHTML=clockHTML(PAD2(n.getHours())+':'+PAD2(n.getMinutes())+':'+PAD2(n.getSeconds()));
- $('#gmtClock').innerHTML=clockHTML(PAD2(n.getUTCHours())+':'+PAD2(n.getUTCMinutes())+':'+PAD2(n.getUTCSeconds()));
- const j=toJalaali(n.getFullYear(),n.getMonth()+1,n.getDate());
+ const P=tzParts(CTX.nowMs);
+ $('#bigClock').innerHTML=clockHTML(PAD2(P.h)+':'+PAD2(P.mi)+':'+PAD2(P.s));
+ $('#gmtClock').innerHTML=clockHTML(PAD2(new Date(CTX.nowMs).getUTCHours())+':'+PAD2(new Date(CTX.nowMs).getUTCMinutes())+':'+PAD2(new Date(CTX.nowMs).getUTCSeconds()));
+ const j=toJalaali(P.y,P.mo,P.d);
  $('#dateJ').textContent=fa(j.jd)+' '+JM[j.jm-1]+' '+fa(j.jy);
- $('#dateG').textContent=fa(n.getDate())+' '+GM[n.getMonth()]+' '+fa(n.getFullYear());
- $('#dow').textContent=DOW[dowIdx(n.getDay())];
+ $('#dateG').textContent=fa(P.d)+' '+GM[P.mo-1]+' '+fa(P.y);
+ $('#dow').textContent=DOW[dowIdx(P.wd)];
+ renderTzChip();
  tickMarket();tickHeader();tickSyncClocks();
  if(activeTab==='dashboard'){dashSessions();tickGolden();dashNextEvent();renderWorld();dashCandles();}
- if(activeTab==='sessions'){renderSessionCards();tickTimeline();}
+ if(activeTab==='sessions'){renderSessionCards();tickMH();}
  if(activeTab==='candles'){tickTfCards();}
  if(activeTab==='events')renderEventsTab();
 }
@@ -1452,10 +1824,8 @@ function init(){
  renderCalDow();renderCal();renderMonthEvents();renderTodayInfo();
  renderEventsTab();renderCL();renderStatics();
  buildCalSelects();renderCalignControls();renderTfChips();renderTfCards();
- renderSettings();
- const utz=Intl.DateTimeFormat().resolvedOptions().timeZone||'';
- const off=-new Date().getTimezoneOffset();const sg=off>=0?'+':'−';const oh=Math.floor(Math.abs(off)/60),om=Math.abs(off)%60;
- $('#userTz').textContent=(TZ_FA[utz]||utz||'محل شما')+' · UTC'+sg+oh+(om?':'+PAD2(om):'');
+ renderSettings();renderTzFlag();renderTrades();
+ computeCtx();renderTzChip();
  $('#evDate').value=isoToday();
  computeCtx();tick();
  const savedTab=store.get('fx_tab','dashboard');
