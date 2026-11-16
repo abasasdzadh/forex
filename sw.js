@@ -1,5 +1,5 @@
 /* ترید دسک — سرویس‌ورکر آفلاین (PWA) */
-const VER = 'fxdesk-v2.5.4';
+const VER = 'fxdesk-v2.7.0';
 const CACHE = 'fxdesk-' + VER;
 const ASSETS = [
   './index.html',
@@ -45,6 +45,19 @@ self.addEventListener('fetch', (e) => {
           if (req.mode === 'navigate') return caches.match('./index.html');
           return Response.error();
         });
+    })
+  );
+});
+
+/* کلیک روی اعلان — فوکوس یا باز کردن برنامه */
+self.addEventListener('notificationclick', (e) => {
+  e.notification.close();
+  e.waitUntil(
+    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((list) => {
+      for (const c of list) {
+        if ('focus' in c) { try { return c.focus(); } catch (_) {} }
+      }
+      return self.clients.openWindow('./index.html');
     })
   );
 });

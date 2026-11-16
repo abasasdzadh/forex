@@ -453,6 +453,27 @@ select.inp.mini{width:auto;min-width:160px;padding-block:8px;padding-inline-star
 .about-list .set-row{padding:9px 2px}
 @media(max-width:640px){.hdr-status .pill{display:none}}
 @media(max-width:400px){.ht-info b{font-size:12px}.ht-info>span{display:none}}
+
+/* ---------- v2.6: نمایش شارژ باتری در نوار بالا ---------- */
+.bat-chip{display:inline-flex;align-items:center;gap:7px;padding:6px 11px;border-radius:999px;background:var(--card-2);border:1px solid var(--border);color:var(--text-2);font-size:12.5px;font-weight:800;cursor:pointer;transition:.2s;font-feature-settings:"tnum" 1;font-variant-numeric:tabular-nums;line-height:1}
+.bat-chip:hover{border-color:var(--gold);color:var(--text)}
+.bat-chip[hidden]{display:none}
+.bat-ico{width:25px;height:13px;display:block;flex-shrink:0}
+.bat-shell{fill:none;stroke:currentColor;stroke-width:1.5;opacity:.5}
+.bat-cap{fill:currentColor;opacity:.5}
+.bat-fil{fill:currentColor;transition:width .7s ease}
+.bat-bolt{fill:var(--gold);display:none}
+.bat-chip.chg{color:var(--gold)}
+.bat-chip.chg .bat-bolt{display:block}
+.bat-chip.low{color:var(--red)}
+[hidden]{display:none!important}
+@media(max-width:480px){
+ .bat-chip{padding:6px 8px;gap:0}
+ .bat-chip b{display:none}
+ .hdr-timer{padding:5px 7px;gap:7px}
+ .ht-ring{width:28px;height:28px}
+ .mini-install{display:none}
+}
 </style>
 </head>
 <body>
@@ -467,6 +488,15 @@ select.inp.mini{width:auto;min-width:160px;padding-block:8px;padding-inline-star
       <button type="button" class="hdr-timer" id="hdrTimer" data-goto="candles" aria-label="شمارش معکوس کندل — رفتن به بخش تایم کندل">
         <span class="ht-ring" aria-hidden="true"><svg viewBox="0 0 34 34"><circle class="ring-track" cx="17" cy="17" r="14.5"/><circle class="ring-prog" id="htArc" cx="17" cy="17" r="14.5"/></svg></span>
         <span class="ht-info"><b id="htCd" dir="ltr">--:--:--</b><span id="htLbl">—</span></span>
+      </button>
+      <button type="button" class="bat-chip" id="batChip" hidden aria-label="وضعیت شارژ باتری">
+        <svg class="bat-ico" viewBox="0 0 32 16" aria-hidden="true">
+          <rect class="bat-shell" x="1" y="2.75" width="26" height="10.5" rx="2.5"/>
+          <rect class="bat-cap" x="28.6" y="5.8" width="2.4" height="4.4" rx="1"/>
+          <rect class="bat-fil" id="batFill" x="3" y="4.75" width="22" height="6.5" rx="1"/>
+          <path class="bat-bolt" id="batBolt" d="M14.6 3.9 11 8.6h3l-1.9 3.7 4.2-5.1h-3l1.3-3.3z"/>
+        </svg>
+        <b id="batPct" dir="ltr">--</b>
       </button>
       <span class="pill closed" id="marketPill"><span class="dot off"></span> ...</span>
       <button class="btn mini-install" id="installBtn" hidden>نصب برنامه</button>
@@ -855,6 +885,43 @@ select.inp.mini{width:auto;min-width:160px;padding-block:8px;padding-inline-star
         </div>
       </div>
       <div class="card">
+        <h3>اعلان‌ها و باتری</h3>
+        <div class="set-row">
+          <span class="info"><b>اعلان‌ها</b><span>اعلان مرورگر برای رخدادهای برنامه؛ کاملاً محلی و بدون نیاز به اینترنت — فقط اجازه مرورگر لازم است</span></span>
+          <span class="bdg b1" id="ntPerm">—</span>
+          <label class="sw"><input type="checkbox" id="ntOn"><i></i></label>
+        </div>
+        <div class="set-row">
+          <span class="info"><b>باز شدن سشن‌ها</b><span>اعلان هنگام باز شدن سیدنی، توکیو، لندن و نیویورک</span></span>
+          <label class="sw"><input type="checkbox" id="ntSessOpen"><i></i></label>
+        </div>
+        <div class="set-row">
+          <span class="info"><b>بسته شدن سشن‌ها</b><span>اعلان هنگام بسته شدن هر سشن — شامل بسته شدن کل بازار در پایان هفته</span></span>
+          <label class="sw"><input type="checkbox" id="ntSessClose"><i></i></label>
+        </div>
+        <div class="set-row">
+          <span class="info"><b>پایان کندل تایم‌فریم هدر</b><span>اعلان هنگام بسته شدن هر کندل تایم‌فریم انتخابی تایمر بالا؛ برای تایم‌فریم‌های کوتاه مثل M1 پرتکرار است</span></span>
+          <label class="sw"><input type="checkbox" id="ntCandle"><i></i></label>
+        </div>
+        <div class="set-row">
+          <span class="info"><b>شمارش معکوس در نوار وضعیت گوشی</b><span>آیکن شمارش کندل کنار ساعت و باتری گوشی (مثل آیکن فیلترشکن) — با کشیدن نوار وضعیت پایین، زمان باقی‌مانده و ساعت بسته شدن کندل دیده می‌شود؛ از تایم‌فریم هدر استفاده می‌کند (اندروید/کروم)</span></span>
+          <label class="sw"><input type="checkbox" id="ntBar"><i></i></label>
+        </div>
+        <div class="set-row">
+          <span class="info"><b>اعلان آزمایشی</b><span>برای بررسی درست بودن مجوز و نمایش اعلان</span></span>
+          <button class="btn btn-ghost small" id="ntTest" type="button">ارسال اعلان آزمایشی</button>
+        </div>
+        <div class="set-row" id="batRow">
+          <span class="info"><b>نمایش شارژ باتری</b><span>آیکن درصد شارژ و وضعیت شارژ در نوار بالای برنامه — برای جزئیات روی آن کلیک کنید</span></span>
+          <label class="sw"><input type="checkbox" id="batShow"><i></i></label>
+        </div>
+        <div class="set-row" id="batSupport" hidden>
+          <span class="info"><b>وضعیت باتری</b><span>مرورگر فعلی از نمایش شارژ باتری پشتیبانی نمی‌کند (Battery Status API فقط در کروم، اج و اندروید)</span></span>
+          <span class="bdg off">ناموجود</span>
+        </div>
+        <p class="muted small">اعلان‌ها فقط وقتی برنامه باز است ارسال می‌شود (حتی اگر در پس‌زمینه باشد)؛ پس از بستن کامل برنامه، مرورگر اجازه اجرای اعلان نمی‌دهد. در حالت نصب‌شده (PWA) روی اندروید اعلان از طریق سرویس‌ورکر هم نمایش داده می‌شود. آیکن نوار وضعیت هم فقط تا وقتی برنامه باز یا در پس‌زمینه است به‌روز می‌ماند؛ اگر برنامه را کامل ببندید، آخرین زمان تا باز شدن دوباره ثابت می‌ماند. آیفون از اعلان محلی پشتیبانی نمی‌کند.</p>
+      </div>
+      <div class="card">
         <h3>پشتیبان‌گیری و بازیابی</h3>
         <p class="muted small">همه داده‌های شما (تایم‌فریم‌ها، رویدادها، تقویم، چک‌لیست، ژورنال و تنظیمات) در یک فایل ذخیره یا بازیابی می‌شود؛ برای انتقال به دستگاه دیگر هم مناسب است.</p>
         <div class="bk-actions">
@@ -879,7 +946,7 @@ select.inp.mini{width:auto;min-width:160px;padding-block:8px;padding-inline-star
       <div class="card">
         <h3>درباره ترید دسک</h3>
         <div class="about-list">
-          <div class="set-row"><span class="info"><b>نسخه</b><span>ترید دسک ۲٫۴ — ژورنال معاملات، منطقه زمانی انتخابی، رینگ گرادیانی و ساعت جهانی دایره‌ای</span></span><span class="chip">PWA</span></div>
+          <div class="set-row"><span class="info"><b>نسخه</b><span>ترید دسک ۲٫۶ — اعلان محلی رخداد سشن‌ها و پایان کندل، نمایش شارژ باتری، ساعت جهانی و ژورنال معاملات</span></span><span class="chip">PWA</span></div>
           <div class="set-row"><span class="info"><b>ذخیره‌سازی</b><span>همه داده‌ها فقط روی همین دستگاه ذخیره می‌شود (بدون سرور)</span></span><span class="bdg on">محلی</span></div>
           <div class="set-row"><span class="info"><b>حالت آفلاین</b><span>پس از اولین بازدید، برنامه بدون اینترنت هم کامل اجرا می‌شود</span></span><span class="bdg on">فعال</span></div>
           <div class="set-row"><span class="info"><b>نصب روی گوشی</b><span>اندروید: منوی مرورگر ← Install app — iOS: دکمه Share ← Add to Home Screen</span></span><button class="btn btn-ghost small" id="setInstall" hidden type="button">نصب</button></div>
@@ -892,7 +959,7 @@ select.inp.mini{width:auto;min-width:160px;padding-block:8px;padding-inline-star
 </main>
 
 <footer class="ftr">
-  <div class="container">ترید دسک نسخه ۲٫۴ — ژورنال معاملات با ثبت خودکار تاریخ، منطقه زمانی انتخابی، شمارش گرادیانی کندل و ساعت جهانی دایره‌ای؛ تماماً افلاین (PWA)؛ داده‌ها فقط روی دستگاه شما.</div>
+  <div class="container">ترید دسک نسخه ۲٫۶ — اعلان محلی باز/بسته شدن سشن‌ها و پایان کندل، نمایش شارژ باتری در نوار بالا، ساعت جهانی و شمارش گرادیانی کندل؛ تماماً افلاین (PWA)؛ داده‌ها فقط روی دستگاه شما.</div>
 </footer>
 
 <nav class="mnav" id="mTabs" aria-label="بخش‌ها">
@@ -1759,7 +1826,7 @@ function tickHeader(){const tf=headTf(),arc=$('#htArc');if(!tf||!arc)return;cons
  $('#htCd').innerHTML=fmtCdSec(i.remain);
  $('#htLbl').textContent=(i.closed?'بازار بسته':'تا بسته شدن')+' · '+tf.label;
  $('#hdrTimer').title='چیدمان بروکر: '+calignLabel()+(CSKEW?' · تنظیم ثانیه: '+(CSKEW>0?'+':'−')+fa(Math.abs(CSKEW)):'');}
-const BK_KEYS=['fx_theme','fx_dst','fx_tz','fx_mhtz','fx_mh24','fx_tfs','fx_calign','fx_calign_mode','fx_calign_auto','fx_skew','fx_headtf','fx_events','fx_checklist','fx_trades','fx_tab'];
+const BK_KEYS=['fx_theme','fx_dst','fx_tz','fx_mhtz','fx_mh24','fx_tfs','fx_calign','fx_calign_mode','fx_calign_auto','fx_skew','fx_headtf','fx_events','fx_checklist','fx_trades','fx_tab','fx_notify','fx_battery','fx_sbnot'];
 function backupObj(){const data={};BK_KEYS.forEach(k=>{const v=localStorage.getItem(k);
  if(v!=null){try{data[k]=JSON.parse(v);}catch(err){data[k]=v;}}});
  return{app:'tradedesk',ver:'2.4',exportedAt:new Date().toISOString(),data:data};}
@@ -1798,6 +1865,188 @@ $('#bkReset').addEventListener('click',function(){
  BK_KEYS.forEach(function(k){localStorage.removeItem(k);});
  toast('برنامه بازنشانی شد');setTimeout(function(){location.reload();},700);});
 
+/* ---------- اعلان‌ها (v2.6) ---------- */
+let NT=store.get('fx_notify',null)||{on:false,sessOpen:true,sessClose:true,candle:false};
+if(typeof NT!=='object'||NT==null)NT={on:false,sessOpen:true,sessClose:true,candle:false};
+NT.on=!!NT.on;NT.sessOpen=NT.sessOpen!==false;NT.sessClose=NT.sessClose!==false;NT.candle=!!NT.candle;
+function saveNT(){store.set('fx_notify',NT);}
+function ntSupported(){return ('Notification' in window);}
+function ntPerm(){try{return Notification.permission;}catch(e){return 'unsupported';}}
+function ntShow(title,body,tag){
+ if(!NT.on||ntPerm()!=='granted')return false;
+ const opts={body:body,tag:tag||'tradedesk',icon:'./icons/icon-192.png',badge:'./icons/icon-192.png'};
+ try{
+  if(navigator.serviceWorker&&navigator.serviceWorker.getRegistration){
+   navigator.serviceWorker.getRegistration().then(function(reg){
+    if(reg&&reg.showNotification){
+     try{const pr=reg.showNotification(title,opts);
+      if(pr&&pr.catch)pr.catch(function(){ntPageShow(title,opts);});}
+     catch(e){ntPageShow(title,opts);}}
+    else ntPageShow(title,opts);}).catch(function(){ntPageShow(title,opts);});
+   return true;}
+ }catch(e){}
+ ntPageShow(title,opts);return true;}
+function ntPageShow(title,opts){try{delete opts.badge;new Notification(title,opts);}catch(e){}}
+function ntEnable(){
+ NT_SESS={};NT_CND='';
+ if(!ntSupported()){NT.on=false;saveNT();syncNTUI();toast('مرورگر شما از اعلان پشتیبانی نمی‌کند');return;}
+ if(ntPerm()==='granted'){NT.on=true;saveNT();syncNTUI();toast('اعلان‌ها فعال شد');return;}
+ if(ntPerm()==='denied'){NT.on=false;saveNT();syncNTUI();toast('مجوز اعلان رد شده — از تنظیمات مرورگر فعال کنید');return;}
+ Notification.requestPermission().then(function(p){
+  if(p==='granted'){NT.on=true;toast('اعلان‌ها فعال شد');}
+  else{NT.on=false;toast('اجازه اعلان داده نشد');}
+  saveNT();syncNTUI();}).catch(function(){NT.on=false;saveNT();syncNTUI();toast('درخواست مجوز اعلان ناموفق بود');});}
+let NT_SESS={};let NT_CND='';
+function ntTick(){
+ if(!NT.on)return;
+ SESSIONS.forEach(function(s){const st=mhState(s);const prev=NT_SESS[s.id];
+  if(!prev){NT_SESS[s.id]={open:st.open};return;}
+  if(prev.open===st.open)return;
+  NT_SESS[s.id]={open:st.open};
+  const tt=mhTimeStr(CTX.nowMs,s.tz);
+  if(st.open&&NT.sessOpen){ntShow('سشن '+s.name+' باز شد','معاملات '+s.name+' شروع شد — ساعت محلی '+tt,'sess-'+s.id+'-open');toast('اعلان: سشن '+s.name+' باز شد');}
+  else if(!st.open&&NT.sessClose){ntShow('سشن '+s.name+' بسته شد','پایان معاملات '+s.name,'sess-'+s.id+'-close');toast('اعلان: سشن '+s.name+' بسته شد');}});
+ const tf=headTf();
+ if(tf&&NT.candle){const i=tfInfo(tf);
+  if(i.closed){NT_CND='';}
+  else{const sig=String(i.close);
+   if(NT_CND&&sig!==NT_CND){ntShow('کندل '+tf.label+' بسته شد','کندل جدید آغاز شد — '+tf.label,'cndl-'+sig);toast('اعلان: پایان کندل '+tf.label);}
+   NT_CND=sig;}}}
+function syncNTUI(){
+ const sup=ntSupported();
+ if(sup&&NT.on&&ntPerm()==='denied'){NT.on=false;saveNT();}
+ const chip=$('#ntPerm');
+ if(chip){let txt,cls;
+  if(!sup){txt='پشتیبانی نمی‌شود';cls='bdg b1';}
+  else if(ntPerm()==='granted'){txt='مجوز داده شد';cls='bdg on';}
+  else if(ntPerm()==='denied'){txt='رد شده';cls='bdg off';}
+  else{txt='بدون مجوز';cls='bdg b2';}
+  chip.textContent=txt;chip.className=cls;}
+ const on=$('#ntOn');if(on){on.checked=!!NT.on;on.disabled=!sup;}
+ const so=$('#ntSessOpen');if(so)so.checked=!!NT.sessOpen;
+ const sc=$('#ntSessClose');if(sc)sc.checked=!!NT.sessClose;
+ const cd=$('#ntCandle');if(cd)cd.checked=!!NT.candle;
+ const nb=$('#ntBar');if(nb){nb.checked=!!SBN.on;nb.disabled=!sup;}
+ const tst=$('#ntTest');if(tst)tst.disabled=!sup;
+ const bs=$('#batShow');if(bs)bs.checked=!!BAT_SHOW;}
+$('#ntOn').addEventListener('change',function(){
+ if(this.checked)ntEnable();
+ else{NT.on=false;NT_SESS={};NT_CND='';saveNT();syncNTUI();toast('اعلان‌ها خاموش شد');}});
+$('#ntSessOpen').addEventListener('change',function(){NT.sessOpen=this.checked;saveNT();});
+$('#ntSessClose').addEventListener('change',function(){NT.sessClose=this.checked;saveNT();});
+$('#ntCandle').addEventListener('change',function(){NT.candle=this.checked;NT_CND='';saveNT();});
+$('#ntTest').addEventListener('click',function(){
+ if(!ntSupported()){toast('مرورگر شما اعلان پشتیبانی نمی‌کند');return;}
+ if(ntPerm()==='granted'){NT.on=true;saveNT();ntShow('اعلان آزمایشی ترید دسک','اعلان‌ها درست کار می‌کند — این پیام آزمایشی است','tdesk-test');toast('اعلان آزمایشی ارسال شد');syncNTUI();return;}
+ if(ntPerm()==='default'){Notification.requestPermission().then(function(p){
+   syncNTUI();
+   if(p==='granted'){NT.on=true;saveNT();ntShow('اعلان آزمایشی ترید دسک','اعلان‌ها درست کار می‌کند — این پیام آزمایشی است','tdesk-test');toast('اعلان آزمایشی ارسال شد');}
+   else toast('اجازه اعلان داده نشد');}).catch(function(){toast('درخواست مجوز ناموفق بود');});
+  return;}
+ toast('مجوز اعلان رد شده — از تنظیمات مرورگر (آیکن قفل کنار آدرس) فعال کنید');});
+
+/* ---------- شمارش معکوس کندل در نوار وضعیت (v2.7) ---------- */
+let SBN=store.get('fx_sbnot',null)||{on:false};
+if(typeof SBN!=='object'||SBN==null)SBN={on:false};
+SBN.on=!!SBN.on;
+function saveSBN(){store.set('fx_sbnot',SBN);}
+let SB_REG=null,SB_ICON=null,SB_BADGE=null,SB_PAGE=null,SB_RETRY=false;
+function sbPerm(){try{return Notification.permission;}catch(e){return 'unsupported';}}
+function sbGlyph(color){
+ try{const c=document.createElement('canvas');c.width=96;c.height=96;const g=c.getContext('2d');
+  if(!g)return null;g.fillStyle=color;
+  g.fillRect(45,6,6,84);
+  const x=22,y=30,w=52,h=38,r=9;
+  g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath();g.fill();
+  return c.toDataURL('image/png');}catch(e){return null;}}
+function sbOpts(body){
+ if(!SB_ICON)SB_ICON=sbGlyph('#e9b64a');
+ if(!SB_BADGE)SB_BADGE=sbGlyph('#ffffff');
+ return{body:body,tag:'cnd-status',icon:SB_ICON||'./icons/icon-192.png',badge:SB_BADGE||'./icons/icon-192.png',silent:true,ongoing:true};}
+function sbContent(){
+ const tf=headTf();
+ if(!tf)return null;
+ const i=tfInfo(tf);
+ if(i.closed)return{title:'بازار بسته است',body:'شروع بازار تا '+fmtCdSec(i.remain)};
+ return{title:tf.label+' · '+fmtCdSec(i.remain),body:'بسته شدن کندل: '+fmtBroker(i.close,tf.u)};}
+function sbPagePush(){
+ try{const c=sbContent();if(!c)return;
+  const o=sbOpts(c.body);delete o.ongoing;
+  SB_PAGE=new Notification(c.title,o);}catch(e){}}
+function sbDraw(){
+ if(!SB_REG||!SB_REG.showNotification)return sbPagePush();
+ const c=sbContent();if(!c)return;
+ try{const pr=SB_REG.showNotification(c.title,sbOpts(c.body));
+  if(pr&&pr.catch)pr.catch(function(){sbPagePush();});}
+ catch(e){sbPagePush();}}
+function sbPush(){
+ if(!SBN.on||sbPerm()!=='granted')return;
+ if(SB_REG){sbDraw();return;}
+ try{
+  if(navigator.serviceWorker&&navigator.serviceWorker.getRegistration){
+   navigator.serviceWorker.getRegistration().then(function(reg){
+    if(reg&&reg.showNotification){SB_REG=reg;sbDraw();}
+    else{if(!SB_RETRY){SB_RETRY=true;setTimeout(sbPush,2500);}sbPagePush();}}).catch(function(){sbPagePush();});
+   return;}
+ }catch(e){}
+ sbPagePush();}
+function sbClear(){
+ try{
+  if(navigator.serviceWorker&&navigator.serviceWorker.getRegistration){
+   navigator.serviceWorker.getRegistration().then(function(reg){
+    if(reg&&reg.getNotifications)reg.getNotifications({tag:'cnd-status'}).then(function(list){
+     (list||[]).forEach(function(n){try{n.close();}catch(e){}});});});}
+ }catch(e){}
+ if(SB_PAGE){try{SB_PAGE.close();}catch(e){}SB_PAGE=null;}
+ SB_RETRY=false;}
+function sbTick(){if(SBN.on)sbPush();}
+$('#ntBar').addEventListener('change',function(){
+ if(this.checked){
+  if(!('Notification' in window)){this.checked=false;SBN.on=false;saveSBN();toast('مرورگر شما از اعلان پشتیبانی نمی‌کند');return;}
+  const go=function(){SBN.on=true;saveSBN();SB_RETRY=false;sbPush();syncNTUI();toast('آیکن شمارش معکوس در نوار وضعیت فعال شد');};
+  const p=sbPerm();
+  if(p==='granted'){go();return;}
+  if(p==='denied'){this.checked=false;SBN.on=false;saveSBN();syncNTUI();toast('مجوز اعلان رد شده — از تنظیمات مرورگر فعال کنید');return;}
+  Notification.requestPermission().then(function(pp){
+   if(pp==='granted')go();
+   else{$('#ntBar').checked=false;SBN.on=false;saveSBN();syncNTUI();toast('اجازه اعلان داده نشد');}}).catch(function(){
+   $('#ntBar').checked=false;SBN.on=false;saveSBN();toast('درخواست مجوز اعلان ناموفق بود');});}
+ else{SBN.on=false;saveSBN();sbClear();toast('شمارش معکوس نوار وضعیت خاموش شد');}});
+
+/* ---------- وضعیت باتری (v2.6) ---------- */
+let BAT=null;
+let BAT_SHOW=store.get('fx_battery',true);
+function batInit(){
+ if(navigator.getBattery){
+  navigator.getBattery().then(function(b){BAT=b;
+   ['levelchange','chargingchange','chargingtimechange','dischargingtimechange'].forEach(function(ev){b.addEventListener(ev,syncBat);});
+   syncBat();}).catch(function(){BAT=null;syncBat();});}
+ else{BAT=null;syncBat();}}
+function syncBat(){
+ const sup=$('#batSupport'),row=$('#batRow'),el=$('#batChip');
+ const ok=!!BAT;
+ if(sup)sup.hidden=ok;
+ if(row)row.hidden=!ok;
+ if(!ok||!BAT_SHOW){if(el)el.hidden=true;return;}
+ el.hidden=false;
+ const lvl=Math.round(BAT.level*100);const chg=!!BAT.charging;
+ el.classList.toggle('chg',chg);
+ el.classList.toggle('low',!chg&&lvl<=20);
+ const f=$('#batFill');if(f)f.setAttribute('width',Math.max(1,22*BAT.level).toFixed(2));
+ const p=$('#batPct');if(p)p.textContent=fa(lvl)+'٪';
+ el.title='شارژ باتری: '+fa(lvl)+'٪ — '+(chg?'در حال شارژ':'با باتری');}
+function batDurStr(s){const h=Math.floor(s/3600),m=Math.round((s%3600)/60);
+ const out=((h?fa(h)+' ساعت ':'')+(m?fa(m)+' دقیقه':'')).trim();return out||'کمتر از یک دقیقه';}
+$('#batChip').addEventListener('click',function(){
+ if(!BAT)return;
+ const lvl=Math.round(BAT.level*100);const chg=!!BAT.charging;
+ let m='شارژ باتری: '+fa(lvl)+'٪ — '+(chg?'در حال شارژ':'با باتری');
+ const ct=BAT.chargingTime,dt=BAT.dischargingTime;
+ if(chg&&typeof ct==='number'&&isFinite(ct)&&ct>0)m+='؛ پر شدن تا '+batDurStr(ct);
+ if(!chg&&typeof dt==='number'&&isFinite(dt)&&dt>0)m+='؛ اتمام شارژ تا '+batDurStr(dt);
+ toast(m);});
+$('#batShow').addEventListener('change',function(){BAT_SHOW=this.checked;store.set('fx_battery',BAT_SHOW);syncBat();});
+
 /* ---------- حلقه اصلی ---------- */
 function tick(){
  const P=tzParts(CTX.nowMs);
@@ -1808,7 +2057,7 @@ function tick(){
  $('#dateG').textContent=fa(P.d)+' '+GM[P.mo-1]+' '+fa(P.y);
  $('#dow').textContent=DOW[dowIdx(P.wd)];
  renderTzChip();
- tickMarket();tickHeader();tickSyncClocks();
+ tickMarket();tickHeader();tickSyncClocks();ntTick();sbTick();
  if(activeTab==='dashboard'){dashSessions();tickGolden();dashNextEvent();renderWorld();dashCandles();}
  if(activeTab==='sessions'){renderSessionCards();tickMH();}
  if(activeTab==='candles'){tickTfCards();}
@@ -1825,6 +2074,8 @@ function init(){
  renderEventsTab();renderCL();renderStatics();
  buildCalSelects();renderCalignControls();renderTfChips();renderTfCards();
  renderSettings();renderTzFlag();renderTrades();
+ syncNTUI();batInit();
+ if(SBN.on)sbPush();
  computeCtx();renderTzChip();
  $('#evDate').value=isoToday();
  computeCtx();tick();
