@@ -1,11 +1,12 @@
 /* ترید دسک — سرویس‌ورکر آفلاین (PWA) */
-const VER = 'fxdesk-v2.7.0';
+const VER = 'fxdesk-v2.7.1';
 const CACHE = 'fxdesk-' + VER;
 const ASSETS = [
   './index.html',
   './manifest.json',
   './icons/icon-192.png',
   './icons/icon-512.png',
+  './icons/badge.png',
   './icons/maskable-192.png',
   './icons/maskable-512.png',
   './icons/apple-touch-icon.png'

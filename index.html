@@ -904,7 +904,7 @@ select.inp.mini{width:auto;min-width:160px;padding-block:8px;padding-inline-star
           <label class="sw"><input type="checkbox" id="ntCandle"><i></i></label>
         </div>
         <div class="set-row">
-          <span class="info"><b>شمارش معکوس در نوار وضعیت گوشی</b><span>آیکن شمارش کندل کنار ساعت و باتری گوشی (مثل آیکن فیلترشکن) — با کشیدن نوار وضعیت پایین، زمان باقی‌مانده و ساعت بسته شدن کندل دیده می‌شود؛ از تایم‌فریم هدر استفاده می‌کند (اندروید/کروم)</span></span>
+          <span class="info"><b>شمارش معکوس در نوار وضعیت گوشی</b><span>آیکن شمارش کندل کنار ساعت و باتری گوشی (مثل آیکن فیلترشکن) — با کشیدن نوار وضعیت پایین، زمان باقی‌مانده، ساعت بسته شدن کندل و سشن‌های باز دیده می‌شود؛ از تایم‌فریم هدر استفاده می‌کند (اندروید/کروم)</span></span>
           <label class="sw"><input type="checkbox" id="ntBar"><i></i></label>
         </div>
         <div class="set-row">
@@ -1874,7 +1874,7 @@ function ntSupported(){return ('Notification' in window);}
 function ntPerm(){try{return Notification.permission;}catch(e){return 'unsupported';}}
 function ntShow(title,body,tag){
  if(!NT.on||ntPerm()!=='granted')return false;
- const opts={body:body,tag:tag||'tradedesk',icon:'./icons/icon-192.png',badge:'./icons/icon-192.png'};
+ const opts={body:body,tag:tag||'tradedesk',icon:ntIcon()||'./icons/icon-192.png',badge:ntBadge()};
  try{
   if(navigator.serviceWorker&&navigator.serviceWorker.getRegistration){
    navigator.serviceWorker.getRegistration().then(function(reg){
@@ -1887,6 +1887,26 @@ function ntShow(title,body,tag){
  }catch(e){}
  ntPageShow(title,opts);return true;}
 function ntPageShow(title,opts){try{delete opts.badge;new Notification(title,opts);}catch(e){}}
+/* ---------- ابزارهای ظاهر اعلان (v2.7.1) ---------- */
+function LISO(s){return '\u2066'+s+'\u2069';}
+var NT_ICON=null;
+function ntIcon(){
+ if(NT_ICON)return NT_ICON;
+ try{const c=document.createElement('canvas');c.width=192;c.height=192;const g=c.getContext('2d');
+  if(!g)return null;
+  const rr=function(x,y,w,h,r){g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath();};
+  rr(0,0,192,192,44);g.fillStyle='#191c22';g.fill();
+  rr(3,3,186,186,41);g.lineWidth=3;g.strokeStyle='rgba(233,182,74,.30)';g.stroke();
+  g.fillStyle='#8f7031';
+  g.fillRect(58,52,8,88);rr(36,76,52,46,10);g.fill();
+  const gr=g.createLinearGradient(0,60,0,135);gr.addColorStop(0,'#f6cd74');gr.addColorStop(1,'#d99b2b');
+  g.fillStyle=gr;
+  g.fillRect(124,36,8,120);rr(102,60,52,72,12);g.fill();
+  return NT_ICON=c.toDataURL('image/png');
+ }catch(e){return null;}}
+function ntBadge(){return './icons/badge.png';}
+function fmtCdTxt(ms){ms=Math.max(0,ms);const t=Math.floor(ms/1e3),d=Math.floor(t/86400),h=Math.floor(t%86400/3600),m=Math.floor(t%3600/60),s=t%60;
+ const hh=fa(PAD2(h))+':'+fa(PAD2(m))+':'+fa(PAD2(s));return d>0?fa(d)+' روز و '+LISO(hh):LISO(hh);}
 function ntEnable(){
  NT_SESS={};NT_CND='';
  if(!ntSupported()){NT.on=false;saveNT();syncNTUI();toast('مرورگر شما از اعلان پشتیبانی نمی‌کند');return;}
@@ -1904,13 +1924,14 @@ function ntTick(){
   if(prev.open===st.open)return;
   NT_SESS[s.id]={open:st.open};
   const tt=mhTimeStr(CTX.nowMs,s.tz);
-  if(st.open&&NT.sessOpen){ntShow('سشن '+s.name+' باز شد','معاملات '+s.name+' شروع شد — ساعت محلی '+tt,'sess-'+s.id+'-open');toast('اعلان: سشن '+s.name+' باز شد');}
+  if(st.open&&NT.sessOpen){ntShow('سشن '+s.name+' باز شد','معاملات '+s.name+' شروع شد — ساعت محلی '+LISO(tt),'sess-'+s.id+'-open');toast('اعلان: سشن '+s.name+' باز شد');}
   else if(!st.open&&NT.sessClose){ntShow('سشن '+s.name+' بسته شد','پایان معاملات '+s.name,'sess-'+s.id+'-close');toast('اعلان: سشن '+s.name+' بسته شد');}});
  const tf=headTf();
  if(tf&&NT.candle){const i=tfInfo(tf);
   if(i.closed){NT_CND='';}
   else{const sig=String(i.close);
-   if(NT_CND&&sig!==NT_CND){ntShow('کندل '+tf.label+' بسته شد','کندل جدید آغاز شد — '+tf.label,'cndl-'+sig);toast('اعلان: پایان کندل '+tf.label);}
+   if(NT_CND&&sig!==NT_CND){const P2=tzParts(CTX.nowMs);
+    ntShow('کندل '+LISO(tf.label)+' بسته شد','کندل جدید در ساعت '+LISO(fa(PAD2(P2.h))+':'+fa(PAD2(P2.mi))+':'+fa(PAD2(P2.s)))+' آغاز شد','cndl-'+sig);toast('اعلان: پایان کندل '+tf.label);}
    NT_CND=sig;}}}
 function syncNTUI(){
  const sup=ntSupported();
@@ -1950,25 +1971,20 @@ let SBN=store.get('fx_sbnot',null)||{on:false};
 if(typeof SBN!=='object'||SBN==null)SBN={on:false};
 SBN.on=!!SBN.on;
 function saveSBN(){store.set('fx_sbnot',SBN);}
-let SB_REG=null,SB_ICON=null,SB_BADGE=null,SB_PAGE=null,SB_RETRY=false;
+let SB_REG=null,SB_PAGE=null,SB_RETRY=false;
 function sbPerm(){try{return Notification.permission;}catch(e){return 'unsupported';}}
-function sbGlyph(color){
- try{const c=document.createElement('canvas');c.width=96;c.height=96;const g=c.getContext('2d');
-  if(!g)return null;g.fillStyle=color;
-  g.fillRect(45,6,6,84);
-  const x=22,y=30,w=52,h=38,r=9;
-  g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath();g.fill();
-  return c.toDataURL('image/png');}catch(e){return null;}}
+function sbSessions(){
+ try{const op=SESSIONS.filter(function(s){try{return mhState(s).open;}catch(e){return false;}}).map(function(s){return s.name;});
+  return op.length?op.join('، '):'';}catch(e){return '';}}
 function sbOpts(body){
- if(!SB_ICON)SB_ICON=sbGlyph('#e9b64a');
- if(!SB_BADGE)SB_BADGE=sbGlyph('#ffffff');
- return{body:body,tag:'cnd-status',icon:SB_ICON||'./icons/icon-192.png',badge:SB_BADGE||'./icons/icon-192.png',silent:true,ongoing:true};}
+ return{body:body,tag:'cnd-status',icon:ntIcon()||'./icons/icon-192.png',badge:ntBadge(),ongoing:true};}
 function sbContent(){
- const tf=headTf();
- if(!tf)return null;
+ const tf=headTf();if(!tf)return null;
  const i=tfInfo(tf);
- if(i.closed)return{title:'بازار بسته است',body:'شروع بازار تا '+fmtCdSec(i.remain)};
- return{title:tf.label+' · '+fmtCdSec(i.remain),body:'بسته شدن کندل: '+fmtBroker(i.close,tf.u)};}
+ if(i.closed)return{title:'بازار بسته است',body:'شروع بازار تا '+fmtCdTxt(i.remain)};
+ const ss=sbSessions();
+ return{title:LISO(tf.label)+' · '+fmtCdTxt(i.remain),
+  body:'بسته شدن کندل '+fmtBroker(i.close,tf.u)+(ss?' · '+ss+' باز':' · خارج از سشن‌ها')};}
 function sbPagePush(){
  try{const c=sbContent();if(!c)return;
   const o=sbOpts(c.body);delete o.ongoing;
