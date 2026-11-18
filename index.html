@@ -86,7 +86,6 @@ main{min-height:60vh}
 .grid{display:grid;gap:14px}
 .grid-4{grid-template-columns:repeat(4,1fr)}
 .grid-2{grid-template-columns:repeat(2,1fr)}
-.grid-hero{grid-template-columns:1.5fr 1fr}
 .cal-grid{grid-template-columns:1.4fr 1fr}
 .sec-title{margin:22px 0 12px;font-size:14.5px;color:var(--text-2);font-weight:800;letter-spacing:.2px}
 .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
@@ -104,15 +103,41 @@ main{min-height:60vh}
 .neg{color:var(--red)}
 .mid{color:var(--amber)}
 
-/* ---------- clock card ---------- */
-.clock-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
-.bigclock{font-size:clamp(2.4rem,9vw,3.6rem);font-weight:800;letter-spacing:1px;line-height:1.2;font-feature-settings:"tnum" 1}
+/* ---------- clock card (میز ساعت معاملاتی — پرچم تمام‌زمینه + بلر و تیرگی) ---------- */
+.clock-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.bigclock{font-size:clamp(2.7rem,7.5vw,4.9rem);font-weight:800;letter-spacing:1px;line-height:1.15;font-feature-settings:"tnum" 1;white-space:nowrap}
 .dgt{display:inline-block;min-width:.6em;text-align:center}
 .col{opacity:.45;display:inline-block;min-width:.3em;text-align:center}
-.clock-sub{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px;padding-top:14px;border-top:1px dashed var(--border-soft)}
-.clock-sub b{font-size:14px;font-weight:700}
-.market-line{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:14px;padding-top:12px;border-top:1px dashed var(--border-soft);font-size:13px}
+.tzcard{position:relative;overflow:hidden;padding:20px 22px}
+.tz-flagbg{position:absolute;inset:-8%;width:116%;height:116%;z-index:0;pointer-events:none;filter:blur(4px) saturate(1.3)}
+.tz-flagbg svg{width:100%;height:100%;display:block}
+html[data-theme="light"] .tz-flagbg{opacity:.5}
+.tz-dim{position:absolute;inset:0;z-index:0;pointer-events:none;background:linear-gradient(180deg,rgba(6,8,12,.36) 0%,rgba(6,8,12,.50) 55%,rgba(6,8,12,.62) 100%)}
+html[data-theme="light"] .tz-dim{background:linear-gradient(180deg,rgba(250,250,253,.42) 0%,rgba(250,250,253,.60) 55%,rgba(250,250,253,.72) 100%)}
+.tz-body{position:relative;z-index:1;display:flex;flex-direction:column;gap:16px}
+.tz-clocks{display:flex;align-items:stretch;justify-content:center}
+.tz-clockbox{flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;gap:6px;padding:4px 8px}
+.tz-clocksep{width:1px;flex-shrink:0;margin:10px 6px;background:linear-gradient(180deg,transparent,rgba(255,255,255,.26) 28%,rgba(255,255,255,.26) 72%,transparent)}
+.tz-clkhead{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
+.tz-clkhead .lbl{margin:0;font-size:12.5px}
+.tz-chip{display:inline-flex;align-items:center;gap:7px;background:rgba(9,11,16,.55);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-color:rgba(255,255,255,.14)}
+html[data-theme="light"] .tz-chip{background:rgba(255,255,255,.62);border-color:rgba(0,0,0,.08)}
+.tz-chip .mini-flag{width:20px;height:14px;border-radius:3px;overflow:hidden;flex-shrink:0;box-shadow:0 0 0 1px rgba(128,128,128,.25)}
+.tz-chip .mini-flag svg{width:100%;height:100%;display:block}
+.tzcard .bigclock{text-align:center;color:#fff;text-shadow:0 1px 5px rgba(0,0,0,.55),0 5px 20px rgba(0,0,0,.4)}
+.tzcard .bigclock .col{color:var(--gold);opacity:.9}
+html[data-theme="light"] .tzcard .bigclock{color:var(--text);text-shadow:none}
+.tz-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.tz-cell{min-width:0;background:rgba(9,11,16,.48);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.10);border-radius:14px;padding:10px 8px 12px;display:flex;flex-direction:column;align-items:center;gap:7px;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+.tz-cell .lbl{margin:0;font-size:11.5px;color:rgba(255,255,255,.62)}
+.tz-cell b{font-size:15.5px;font-weight:800;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+html[data-theme="light"] .tz-cell{background:rgba(255,255,255,.52);border-color:rgba(0,0,0,.07);box-shadow:0 4px 14px rgba(0,0,0,.07)}
+html[data-theme="light"] .tz-cell .lbl{color:var(--text-2)}
+html[data-theme="light"] .tz-cell b{color:var(--text)}
+.market-line{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;position:relative;z-index:1;margin-top:16px;margin-inline:auto;padding:9px 18px;border-radius:999px;background:rgba(9,11,16,.48);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.10);font-size:13px;width:fit-content;max-width:100%}
+html[data-theme="light"] .market-line{background:rgba(255,255,255,.52);border-color:rgba(0,0,0,.07)}
 .market-line b{color:var(--gold)}
+@media(max-width:760px){.tzcard{padding:12px 10px}.tz-body{gap:10px}.tz-clocks{gap:0}.tz-clockbox{padding:2px 2px;gap:3px}.tz-clkhead{flex-direction:column;gap:3px}.tz-clkhead .lbl{font-size:10px}.tz-chip{padding:2px 8px;font-size:10px}.tz-chip .mini-flag{width:14px;height:10px}.bigclock{font-size:clamp(1.45rem,7vw,2rem);letter-spacing:0}.tz-clocksep{margin:6px 2px}.tz-grid{grid-template-columns:repeat(2,1fr);gap:6px}.tz-cell{padding:7px 4px 8px;gap:4px;border-radius:12px}.tz-cell .lbl{font-size:10.5px}.tz-cell b{font-size:13px}.market-line{margin-top:10px;padding:7px 14px;font-size:12px}}
 
 /* ---------- golden card ---------- */
 .golden-card{border-color:rgba(233,182,74,.4);background:linear-gradient(165deg,var(--card) 55%,var(--card-2))}
@@ -120,18 +145,6 @@ main{min-height:60vh}
 .gold-stat{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
 .gold-times{display:flex;justify-content:space-between;font-size:12.5px;color:var(--text-2);margin-top:8px}
 .gold-local{margin-top:6px}
-
-/* ---------- کارت ساعت با نماد منطقه (v2.4) ---------- */
-.tzcard{position:relative;overflow:hidden}
-.tzcard>.flagbg{position:absolute;inset:0;z-index:0;opacity:.5;pointer-events:none}
-.tzcard::after{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(11,14,18,.62),rgba(11,14,18,.84) 50%,rgba(11,14,18,.92))}
-html[data-theme="light"] .tzcard::after{background:linear-gradient(180deg,rgba(244,242,236,.6),rgba(244,242,236,.86) 50%,rgba(244,242,236,.94))}
-.tzcard>*{position:relative;z-index:2}
-.tzcard .bigclock{text-shadow:0 2px 14px rgba(0,0,0,.35)}
-html[data-theme="light"] .tzcard .bigclock{text-shadow:none}
-.tz-chip{display:inline-flex;align-items:center;gap:7px}
-.tz-chip .mini-flag{width:20px;height:14px;border-radius:3px;overflow:hidden;flex-shrink:0;box-shadow:0 0 0 1px rgba(128,128,128,.25)}
-.tz-chip .mini-flag svg{width:100%;height:100%;display:block}
 
 /* ---------- session cards ---------- */
 .s-mini{padding:15px}
@@ -330,11 +343,11 @@ button.chip:hover{border-color:var(--gold);color:var(--gold)}
 .tr-empty{text-align:center;padding:22px 10px;color:var(--text-3);font-size:13px;border:1px dashed var(--border);border-radius:13px}
 
 /* ---------- world clock ---------- */
-.wc-row{display:flex;justify-content:space-between;align-items:center;padding:8px 3px;border-bottom:1px dashed var(--border-soft);font-size:13.5px}
+.wc-row{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:8px 3px;border-bottom:1px dashed var(--border-soft);font-size:13.5px}
 .wc-row:last-child{border-bottom:none}
-.wc-city{font-weight:700}
-.wc-dow{color:var(--text-3);font-size:11px;flex:1;text-align:center;margin-inline:8px}
-.wc-row b{font-weight:800}
+.wc-city{font-weight:700;justify-self:start;min-width:0}
+.wc-dow{color:var(--text-3);font-size:11px;text-align:center;margin-inline:8px}
+.wc-row b{font-weight:800;justify-self:end}
 .next-ev{display:flex;flex-direction:column;gap:7px;align-items:flex-start}
 .next-ev .ttl{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 
@@ -356,21 +369,16 @@ button.chip:hover{border-color:var(--gold);color:var(--gold)}
 .ct-card.closed .ring-center span{color:var(--amber)}
 /* داشبورد: نوار تایمر ترمینالی کندل */
 .cndbar{display:flex;flex-wrap:wrap;gap:9px}
-.cndst{position:relative;display:inline-flex;align-items:center;gap:9px;padding:8px 12px;background:var(--card-2);border:1px solid var(--border-soft);border-radius:11px;cursor:pointer;font-family:inherit;font-size:inherit;color:var(--text);line-height:1;min-width:0;transition:border-color .2s,box-shadow .2s}
+.cndst{position:relative;display:inline-flex;align-items:center;justify-content:space-between;gap:9px;padding:7px 12px 11px;background:var(--card-2);border:1px solid var(--border-soft);border-radius:12px;cursor:pointer;font-family:inherit;font-size:inherit;color:var(--text);line-height:1;min-width:0;overflow:hidden;transition:border-color .2s,box-shadow .2s}
 .cndst:hover{border-color:rgba(233,182,74,.35)}
 .cndst:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
-.cndst.on{border-color:rgba(233,182,74,.55);box-shadow:0 0 0 1px rgba(233,182,74,.14),0 0 16px rgba(233,182,74,.12)}
-.cndst.on::after{content:'';position:absolute;top:-3px;inset-inline-start:15px;width:6px;height:6px;border-radius:99px;background:var(--gold);box-shadow:0 0 7px rgba(233,182,74,.85)}
-.cnd-tfl{font-size:12.5px;font-weight:800;letter-spacing:.3px;color:var(--text-2)}
-.cndst.on .cnd-tfl{color:var(--gold)}
-.cnr{width:18px;height:18px;flex:none;transform:rotate(-90deg)}
-.cnr circle{fill:none;stroke-width:3}
-.cnr .cnr-track{stroke:rgba(128,128,128,.28)}
-.cnr .cnr-prog{stroke-linecap:round;transition:stroke-dashoffset 1s linear}
-.cnd-cd{font-size:13px;font-weight:700;font-feature-settings:"tnum" 1;font-variant-numeric:tabular-nums;white-space:nowrap;direction:ltr;color:var(--text)}
-@media(max-width:560px){.cndbar{gap:7px}.cndst{padding:7px 10px;gap:7px;border-radius:10px}.cnd-cd{font-size:12px}.cnr{width:16px;height:16px}}
+.cndst.on{border-color:var(--gold);box-shadow:0 0 0 1px rgba(233,182,74,.22),0 0 16px rgba(233,182,74,.18)}
+.cnd-tfl{font-size:10.5px;font-weight:800;line-height:1;padding:4px 7px 3px;border-radius:7px;letter-spacing:.3px;flex-shrink:0;direction:ltr;font-feature-settings:"tnum" 1;background:rgba(233,182,74,.16);color:var(--gold);border:1px solid rgba(233,182,74,.4)}
+.cnd-cd{font-size:13.5px;font-weight:800;font-feature-settings:"tnum" 1;font-variant-numeric:tabular-nums;white-space:nowrap;direction:ltr;color:var(--text)}
+.cnd-bar{position:absolute;left:7px;right:7px;bottom:4px;height:3px;border-radius:99px;background:var(--border);overflow:hidden}
+.cnd-bar i{position:absolute;top:0;bottom:0;left:0;width:0;border-radius:99px;background:linear-gradient(90deg,#d99b2b,#f6cd74);box-shadow:0 0 6px rgba(233,182,74,.55);transition:width .9s linear}
+@media(max-width:560px){.cndbar{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.cndst{width:100%;padding:8px 11px 11px;gap:7px;border-radius:11px}.cnd-cd{font-size:12.5px}}
 .cnd-closed{display:flex;align-items:center;justify-content:center;gap:12px;padding:16px 14px;background:var(--card-2);border:1px dashed var(--border);border-radius:13px;flex-wrap:wrap;text-align:center}
-.mini-install{padding:8px 14px;font-size:12.5px;border-radius:11px;flex-shrink:0}
 
 /* ---------- v2.3: همگام‌سازی با چارت بروکر ---------- */
 .sync-live{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--gold-soft);border:1px solid rgba(233,182,74,.3);border-radius:13px;padding:10px 14px;margin-top:10px}
@@ -395,7 +403,6 @@ button.chip:hover{border-color:var(--gold);color:var(--gold)}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
 @media(max-width:960px){.grid-4{grid-template-columns:repeat(2,1fr)}.cal-grid{grid-template-columns:1fr}}
-@media(max-width:860px){.grid-hero{grid-template-columns:1fr}}
 @media(max-width:820px){
   .tabs{display:none}
   .mnav{display:flex}
@@ -404,24 +411,22 @@ button.chip:hover{border-color:var(--gold);color:var(--gold)}
   .grid-2{grid-template-columns:1fr}
   .card{padding:15px}
 }
-@media(max-width:560px){.grid-4{grid-template-columns:1fr 1fr}.fgrid{grid-template-columns:1fr}.clock-sub{grid-template-columns:1fr 1fr}.pill{font-size:11.5px;padding:5px 10px}.brand small{display:none}.day{min-height:34px;border-radius:9px}.day .jn{font-size:12.5px}.day .gn{display:none}}
+@media(max-width:560px){.grid-4{grid-template-columns:1fr 1fr}.fgrid{grid-template-columns:1fr}.pill{font-size:11.5px;padding:5px 10px}.brand small{display:none}.day{min-height:34px;border-radius:9px}.day .jn{font-size:12.5px}.day .gn{display:none}}
 @media(min-width:821px){.mnav{display:none}}
 
 /* ---------- v2.2: مینی‌تایمر هدر، رینگ دایره‌ای کندل، پرچم سشن‌ها، تنظیمات ---------- */
 .ring-track{fill:none;stroke:var(--card-2)}
 .ring-prog{fill:none;stroke:var(--gold);stroke-linecap:round}
-.hdr-timer{display:inline-flex;align-items:center;gap:9px;background:var(--card-2);border:1px solid var(--border);border-radius:14px;padding:6px 9px;transition:.2s;color:var(--text)}
+.hdr-timer{position:relative;display:inline-flex;align-items:center;gap:9px;background:var(--card-2);border:1px solid var(--border);border-radius:12px;padding:7px 12px 11px;transition:.2s;color:var(--text);overflow:hidden}
 .hdr-timer:hover{border-color:var(--gold)}
-.ht-ring{position:relative;width:34px;height:34px;flex-shrink:0}
-.ht-ring svg,.ringwrap svg,.mini-ring{display:block}
-.ht-ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ht-badge{font-size:10.5px;font-weight:800;line-height:1;padding:4px 7px 3px;border-radius:7px;background:rgba(233,182,74,.16);color:var(--gold);border:1px solid rgba(233,182,74,.4);letter-spacing:.3px;flex-shrink:0;direction:ltr;font-feature-settings:"tnum" 1}
+.hdr-timer.closed{border-color:rgba(248,113,113,.4)}
+.hdr-timer.closed .ht-badge{background:rgba(248,113,113,.12);color:#f87171;border-color:rgba(248,113,113,.35)}
+.ht-cd{font-size:14.5px;font-weight:800;font-feature-settings:"tnum" 1;font-variant-numeric:tabular-nums;letter-spacing:.3px;white-space:nowrap;line-height:1.1}
+.ht-bar{position:absolute;left:7px;right:7px;bottom:4px;height:3px;border-radius:99px;background:var(--border);overflow:hidden}
+.ht-bar i{position:absolute;top:0;bottom:0;left:0;width:0;border-radius:99px;background:linear-gradient(90deg,#d99b2b,#f6cd74);box-shadow:0 0 7px rgba(233,182,74,.55);transition:width .9s linear}
 .ringwrap svg{width:100%;height:100%;transform:rotate(-90deg)}
 .mini-ring{width:24px;height:24px;flex-shrink:0;transform:rotate(-90deg)}
-.ht-ring .ring-track{stroke-width:4}
-.ht-ring .ring-prog{stroke-width:4;transition:stroke-dashoffset .95s linear}
-.ht-info{display:flex;flex-direction:column;align-items:flex-start;line-height:1.35}
-.ht-info b{font-size:13.5px;font-weight:800;white-space:nowrap;font-feature-settings:"tnum" 1}
-.ht-info span{font-size:9.5px;color:var(--text-3);font-weight:700;white-space:nowrap}
 .ringwrap{position:relative;width:148px;height:148px;margin:8px auto 12px}
 .ringwrap .ring-track{stroke-width:10}
 .ringwrap .ring-prog{stroke-width:10;transition:stroke-dashoffset .95s linear}
@@ -436,6 +441,23 @@ button.chip:hover{border-color:var(--gold);color:var(--gold)}
 .flagbg svg{width:100%;height:100%;display:block}
 .scard>.flagbg,.s-mini>.flagbg{position:absolute;inset:0;z-index:0;opacity:.32;pointer-events:none}
 html[data-theme="light"] .flagbg{opacity:.24}
+
+/* ---------- کارت هم‌پوشانی سشن‌ها (پنجره‌های ترکیبی) ---------- */
+.ovcard{position:relative;overflow:hidden}
+.ovflags{position:absolute;inset:0;z-index:0;pointer-events:none;display:flex;direction:ltr}
+.ovflag{flex:1;opacity:.38;filter:blur(4px) saturate(1.2)}
+.ovflag svg{width:100%;height:100%;display:block}
+.ovflag.a{-webkit-mask-image:linear-gradient(to right,#000 55%,transparent 98%);mask-image:linear-gradient(to right,#000 55%,transparent 98%)}
+.ovflag.b{-webkit-mask-image:linear-gradient(to left,#000 55%,transparent 98%);mask-image:linear-gradient(to left,#000 55%,transparent 98%)}
+html[data-theme="light"] .ovflag{opacity:.32}
+.ovdim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,8,12,.35) 0%,rgba(6,8,12,.62) 100%)}
+html[data-theme="light"] .ovdim{background:linear-gradient(180deg,rgba(250,250,253,.40) 0%,rgba(250,250,253,.68) 100%)}
+.ovcard-golden{grid-column:1/-1}
+.ov-body{position:relative;z-index:1}
+.ov-top{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.ov-top h3{margin:0}
+.ov-desc{margin:0 0 12px}
+.ov-chip{background:rgba(233,182,74,.14);color:var(--gold);border-color:rgba(233,182,74,.4);font-weight:800}
 .scard::after,.s-mini::after{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(165deg,rgba(11,14,18,.55),rgba(11,14,18,.82) 60%,rgba(11,14,18,.92))}
 html[data-theme="light"] .scard::after,html[data-theme="light"] .s-mini::after{background:linear-gradient(165deg,rgba(244,242,236,.55),rgba(244,242,236,.9))}
 .scard>*,.s-mini>*{position:relative;z-index:2}
@@ -452,7 +474,7 @@ select.inp.mini{width:auto;min-width:160px;padding-block:8px;padding-inline-star
 .about-list{font-size:12.5px}
 .about-list .set-row{padding:9px 2px}
 @media(max-width:640px){.hdr-status .pill{display:none}}
-@media(max-width:400px){.ht-info b{font-size:12px}.ht-info>span{display:none}}
+@media(max-width:400px){.ht-cd{font-size:12.5px}.hdr-timer{padding:6px 10px 10px;gap:7px}}
 </style>
 </head>
 <body>
@@ -465,11 +487,11 @@ select.inp.mini{width:auto;min-width:160px;padding-block:8px;padding-inline-star
     </div>
     <div class="hdr-status">
       <button type="button" class="hdr-timer" id="hdrTimer" data-goto="candles" aria-label="شمارش معکوس کندل — رفتن به بخش تایم کندل">
-        <span class="ht-ring" aria-hidden="true"><svg viewBox="0 0 34 34"><circle class="ring-track" cx="17" cy="17" r="14.5"/><circle class="ring-prog" id="htArc" cx="17" cy="17" r="14.5"/></svg></span>
-        <span class="ht-info"><b id="htCd" dir="ltr">--:--:--</b><span id="htLbl">—</span></span>
+        <span class="ht-badge" id="htLbl">—</span>
+        <b class="ht-cd" id="htCd" dir="ltr">--:--:--</b>
+        <span class="ht-bar" aria-hidden="true"><i id="htArcBar"></i></span>
       </button>
       <span class="pill closed" id="marketPill"><span class="dot off"></span> ...</span>
-      <button class="btn mini-install" id="installBtn" hidden>نصب برنامه</button>
       <button class="icon-btn" id="themeBtn" aria-label="تغییر تم" title="تغییر تم روشن/تاریک">
         <svg id="iconSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
         <svg id="iconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
@@ -493,30 +515,35 @@ select.inp.mini{width:auto;min-width:160px;padding-block:8px;padding-inline-star
 
   <!-- ================= داشبورد ================= -->
   <section class="tab-section active" id="tab-dashboard">
-    <div class="grid grid-hero">
-      <div class="card tzcard">
-        <div class="flagbg" id="tzFlag" aria-hidden="true"></div>
-        <div class="clock-top">
-          <span class="lbl" style="margin:0">ساعت محلی شما</span>
-          <span class="chip tz-chip" id="userTz">...</span>
+    <div class="card tzcard">
+      <div class="tz-flagbg" id="tzFlag" aria-hidden="true"></div>
+      <div class="tz-dim" aria-hidden="true"></div>
+      <div class="tz-body">
+        <div class="tz-clocks">
+          <div class="tz-clockbox">
+            <div class="tz-clkhead">
+              <span class="lbl">ساعت محلی شما</span>
+              <span class="chip tz-chip" id="userTz">...</span>
+            </div>
+            <div class="bigclock" id="bigClock" dir="ltr">--:--:--</div>
+          </div>
+          <div class="tz-clocksep" aria-hidden="true"></div>
+          <div class="tz-clockbox">
+            <div class="tz-clkhead">
+              <span class="lbl">ساعت بروکر</span>
+              <span class="chip tz-chip" id="brokerOff">UTC+3</span>
+            </div>
+            <div class="bigclock" id="brokerClock" dir="ltr">--:--:--</div>
+          </div>
         </div>
-        <div class="bigclock" id="bigClock" dir="ltr">--:--:--</div>
-        <div class="clock-sub">
-          <div><span class="lbl">GMT / UTC</span><b id="gmtClock" dir="ltr">--:--:--</b></div>
-          <div><span class="lbl">روز هفته</span><b id="dow">—</b></div>
-          <div><span class="lbl">تاریخ شمسی</span><b id="dateJ">—</b></div>
-          <div><span class="lbl">تاریخ میلادی</span><b id="dateG">—</b></div>
+        <div class="tz-grid">
+          <div class="tz-cell"><span class="lbl">GMT / UTC</span><b id="gmtClock" dir="ltr">--:--:--</b></div>
+          <div class="tz-cell"><span class="lbl">روز هفته</span><b id="dow">—</b></div>
+          <div class="tz-cell"><span class="lbl">تاریخ شمسی</span><b id="dateJ">—</b></div>
+          <div class="tz-cell"><span class="lbl">تاریخ میلادی</span><b id="dateG">—</b></div>
         </div>
-        <div class="market-line" id="marketLine"></div>
       </div>
-      <div class="card golden-card">
-        <h3>پنجره طلایی لندن + نیویورک</h3>
-        <p class="muted small" style="margin-bottom:12px">بیشترین نقدینگی و نوسان بازار — بهترین زمان برای اسکالپ و معاملات روزانه</p>
-        <div class="gold-stat" id="goldenStatus"></div>
-        <div class="bar"><i id="goldenBar" style="width:0%"></i></div>
-        <div class="gold-times" id="goldenRange"></div>
-        <div class="muted small gold-local" id="goldenLocal"></div>
-      </div>
+      <div class="market-line" id="marketLine"></div>
     </div>
 
     <h2 class="sec-title">سشن‌های معاملاتی</h2>
@@ -546,6 +573,7 @@ select.inp.mini{width:auto;min-width:160px;padding-block:8px;padding-inline-star
       <label class="sw"><input type="checkbox" id="dstSw"><i></i></label>
       <span class="small muted">جبران ساعت تابستانی (+۱)</span>
     </div>
+    <div class="grid grid-2" id="overlapCards" style="margin-bottom:14px"></div>
     <div class="grid grid-2" id="sessionCards"></div>
     <div class="card" style="margin-top:14px">
       <div class="mh-top">
@@ -566,10 +594,6 @@ select.inp.mini{width:auto;min-width:160px;padding-block:8px;padding-inline-star
         <section class="mh-tl" id="mhTl" aria-label="تایم‌لاین ۲۴ ساعته بازارهای جهانی"></section>
         <aside class="mh-cards" id="mhCards" aria-label="کارت‌های بازارهای جهانی"></aside>
       </div>
-    </div>
-    <div class="card" style="margin-top:14px">
-      <h3>هم‌پوشانی سشن‌ها</h3>
-      <div id="overlapList"></div>
     </div>
   </section>
 
@@ -915,7 +939,7 @@ select.inp.mini{width:auto;min-width:160px;padding-block:8px;padding-inline-star
           <div class="set-row"><span class="info"><b>نسخه</b><span>ترید دسک ۲٫۴ — ژورنال معاملات، منطقه زمانی انتخابی، رینگ گرادیانی و ساعت جهانی دایره‌ای</span></span><span class="chip">PWA</span></div>
           <div class="set-row"><span class="info"><b>ذخیره‌سازی</b><span>همه داده‌ها فقط روی همین دستگاه ذخیره می‌شود (بدون سرور)</span></span><span class="bdg on">محلی</span></div>
           <div class="set-row"><span class="info"><b>حالت آفلاین</b><span>پس از اولین بازدید، برنامه بدون اینترنت هم کامل اجرا می‌شود</span></span><span class="bdg on">فعال</span></div>
-          <div class="set-row"><span class="info"><b>نصب روی گوشی</b><span>اندروید: منوی مرورگر ← Install app — iOS: دکمه Share ← Add to Home Screen</span></span><button class="btn btn-ghost small" id="setInstall" hidden type="button">نصب</button></div>
+          <div class="set-row"><span class="info"><b>نصب روی گوشی</b><span>اندروید: منوی مرورگر ← Install app — iOS: دکمه Share ← Add to Home Screen</span></span></div>
           <div class="set-row"><span class="info"><b>انتشار در گیت‌هاب</b><span>محتوای پوشه را در ریشه ریپو آپلود و GitHub Pages را روی شاخه main فعال کنید</span></span></div>
         </div>
       </div>
@@ -1039,10 +1063,12 @@ function tzParts(ts){const tz=curTZ();
  const p={};_tzFmt.formatToParts(new Date(ts)).forEach(function(q){p[q.type]=q.value;});
  return{y:+p.year,mo:+p.month,d:+p.day,h:+p.hour,mi:+p.minute,s:+p.second,wd:TZ_WD[p.weekday]||0};}
 function tzFlagKey(){return TZ_FLAG[curTZ()]||null;}
-function renderTzFlag(){const el=$('#tzFlag');if(!el)return;const k=tzFlagKey();el.innerHTML=k?(FLAG[k]||FLAG.globe):FLAG.globe;el.style.color='var(--text-2)';
+function renderTzFlag(){const k=tzFlagKey();const svg=k?(FLAG[k]||FLAG.globe):FLAG.globe;
+ const el=$('#tzFlag');if(el){el.innerHTML=svg;const sv=el.querySelector('svg');if(sv)sv.setAttribute('preserveAspectRatio','none');}
  const mf=$('#userTzFlag');if(mf)mf.innerHTML=k?(FLAG[k]||FLAG.globe):FLAG.globe;}
 function renderTzChip(){const el=$('#userTz');if(!el)return;
  const t=curTZ();const name=TZ_FA[t]||t;const off=tzOffsetMin(CTX.nowMs,t);
+ const fn=$('#tzFlagName');if(fn&&fn.textContent!==name)fn.textContent=name;
  const sg=off>=0?'+':'−';const oh=Math.floor(Math.abs(off)/60),om=Math.abs(off)%60;
  const k=tzFlagKey();
  el.innerHTML=(k?'<span class="mini-flag" id="userTzFlag" aria-hidden="true">'+(FLAG[k]||FLAG.globe)+'</span>':'<span class="mini-flag" id="userTzFlag" aria-hidden="true">'+FLAG.globe+'</span>')
@@ -1081,8 +1107,7 @@ function hstripes(cols){const n=cols.length,h=200/n;
 function vstripes(cols){const n=cols.length,w=320/n;
  return cols.map((c,i)=>'<rect x="'+(i*w).toFixed(2)+'" width="'+(w+0.4).toFixed(2)+'" height="200" fill="'+c+'"/>').join('');}
 function svgWrap(inner){return '<svg viewBox="0 0 320 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">'+inner+'</svg>';}
-FLAG.ir=svgWrap(hstripes(['#239f40','#ffffff','#da0000'])
- +'<rect x="146" y="86" width="28" height="28" transform="rotate(45 160 100)" fill="#da0000"/>');
+FLAG.ir=svgWrap(hstripes(['#239f40','#ffffff','#da0000']));
 FLAG.ae=svgWrap(hstripes(['#00732f','#ffffff','#000000'])+'<rect width="90" height="200" fill="#ff0000"/>');
 FLAG.tr=svgWrap('<rect width="320" height="200" fill="#E30A17"/>'
  +'<circle cx="122" cy="100" r="40" fill="#ffffff"/><circle cx="138" cy="100" r="32" fill="#E30A17"/>'
@@ -1148,12 +1173,11 @@ function marketInfo(){const wd=new Date(CTX.utcDayStart).getUTCDay();const m=wd*
  return{open:open,chgTs:chgTs};}
 function segsOf(s){const w=getWin(s);return w.wraps?[[w.st,1440],[0,w.en]]:[[w.st,w.en]];}
 function pairSeg(a,b){const A=segsOf(a),B=segsOf(b),out=[];A.forEach(x=>B.forEach(y=>{const s=Math.max(x[0],y[0]),e=Math.min(x[1],y[1]);if(e-s>0)out.push([s,e]);}));return out;}
-function overlaps(){return{lonny:pairSeg(byId.london,byId.newyork),sydto:pairSeg(byId.sydney,byId.tokyo),tolon:pairSeg(byId.tokyo,byId.london)};}
-function goldenState(){const segs=overlaps().lonny;
+function pairState(a,b){const segs=pairSeg(a,b);
  for(const sg of segs){const st=CTX.utcDayStart+sg[0]*6e4,en=CTX.utcDayStart+sg[1]*6e4;
   if(CTX.utcMins>=sg[0]&&CTX.utcMins<sg[1])return{active:true,prog:(CTX.utcMins-sg[0])/(sg[1]-sg[0]),startTs:st,endTs:en,nextTs:st,seg:sg};}
  const cands=[];segs.forEach(sg=>{cands.push(CTX.utcDayStart+sg[0]*6e4);cands.push(CTX.utcDayStart+864e5+sg[0]*6e4);});
- const next=cands.filter(t=>t>CTX.nowMs).sort((a,b)=>a-b)[0]||CTX.utcDayStart+864e5+segs[0][0]*6e4;
+ const next=cands.filter(t=>t>CTX.nowMs).sort((x,y)=>x-y)[0]||CTX.utcDayStart+864e5+segs[0][0]*6e4;
  return{active:false,prog:0,startTs:next,endTs:next+(segs[0][1]-segs[0][0])*6e4,nextTs:next,seg:segs[0]};}
 
 /* ---------- قالب‌بندی ---------- */
@@ -1177,29 +1201,6 @@ function applyTheme(t){document.documentElement.setAttribute('data-theme',t);
 $('#themeBtn').addEventListener('click',()=>{const nt=(document.documentElement.getAttribute('data-theme')==='dark')?'light':'dark';store.set('fx_theme',nt);applyTheme(nt);const st=$('#setTheme');if(st)st.value=nt;});
 
 /* ---------- نصب برنامه (PWA) ---------- */
-let installEv=null;const iBtn=$('#installBtn');const siBtn=$('#setInstall');
-function isStandalone(){
- const mm=window.matchMedia;
- return !!(mm&&(mm('(display-mode: standalone)').matches||mm('(display-mode: minimal-ui)').matches))||!!window.navigator.standalone;}
-function hideInstallBtns(){iBtn.hidden=true;if(siBtn)siBtn.hidden=true;}
-function markInstalled(){try{store.set('fx_installed',true);}catch(e){}hideInstallBtns();}
-if(isStandalone()||store.get('fx_installed',false))hideInstallBtns();
-window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();installEv=e;
- try{store.set('fx_installed',false);}catch(err){}
- iBtn.hidden=false;if(siBtn)siBtn.hidden=false;});
-function promptInstall(btn){if(!installEv||typeof installEv.prompt!=='function'){
-  if(/iP(hone|ad|od)/.test(navigator.userAgent))toast('نصب در آیفون: دکمه اشتراک ← Add to Home Screen');
-  else toast('از منوی مرورگر گزینه Install app را انتخاب کنید');
-  return;}
- installEv.prompt();
- installEv.userChoice.then(function(r){if(r&&r.outcome==='accepted'){markInstalled();toast('برنامه روی دستگاه نصب شد');}
-  installEv=null;iBtn.hidden=true;if(btn)btn.hidden=true;});}
-iBtn.addEventListener('click',function(){promptInstall(iBtn);});
-if(siBtn)siBtn.addEventListener('click',function(){promptInstall(siBtn);});
-window.addEventListener('appinstalled',function(){markInstalled();toast('برنامه روی دستگاه نصب شد');});
-try{var dmMq=window.matchMedia('(display-mode: standalone)');
- var onDm=function(e){if(e.matches)markInstalled();};
- if(dmMq.addEventListener)dmMq.addEventListener('change',onDm);else if(dmMq.addListener)dmMq.addListener(onDm);}catch(e){}
 if(/iP(hone|ad|od)/.test(navigator.userAgent)&&!window.navigator.standalone){setTimeout(function(){toast('نصب در آیفون: دکمه اشتراک ← Add to Home Screen');},1800);}
 
 /* ---------- تب‌ها ---------- */
@@ -1211,7 +1212,7 @@ $$('[data-tab]').forEach(b=>b.addEventListener('click',()=>setTab(b.dataset.tab)
 document.addEventListener('click',e=>{const g=e.target.closest('[data-goto]');if(g)setTab(g.dataset.goto);});
 
 /* ---------- رندر ثابت‌ها ---------- */
-function renderStatics(){renderMH();renderOverlaps();}
+function renderStatics(){renderMH();renderOverlapCards();}
 
 /* ---------- Market Hours (v2.5) ---------- */
 let MHTZ=store.get('fx_mhtz','auto');
@@ -1320,11 +1321,40 @@ $('#mhTz').addEventListener('change',function(){MHTZ=this.value||'auto';store.se
  renderMH();tickMH();toast('منطقه زمانی پنل: '+(MHTZ==='auto'?'ساعت دستگاه':(TZ_FA[mhTZ()]||mhTZ())));});
 $('#mh24').addEventListener('change',function(){MH24=!!this.checked;store.set('fx_mh24',MH24);tickMH();});
 
-function renderOverlaps(){const ov=overlaps();
- const mk=(n,segs,c)=>{if(!segs.length)return '';
-  const a=segs[0][0],b=segs[0][1],e=(b%1440);
-  return '<div class="ov-row"><span class="ov-name" style="color:'+c+'">'+n+'</span>'+ltr(fa(PAD2(Math.floor(a/60)))+':'+fa(PAD2(a%60))+' – '+fa(PAD2(Math.floor(e/60)))+':'+fa(PAD2(e%60))+' GMT')+'<span class="chip">'+fa(Math.round((b-a)/60))+' ساعت</span></div>';};
- $('#overlapList').innerHTML=mk('لندن + نیویورک (پنجره طلایی)',ov.lonny,'#e9b64a')+mk('سیدنی + توکیو',ov.sydto,'#2dd4bf')+mk('توکیو + لندن',ov.tolon,'#f472b6');}
+/* ---------- کارت‌های هم‌پوشانی سشن‌ها ---------- */
+const OVPAIRS=[
+ {key:'lonny', a:'london', b:'newyork', golden:true,  color:'#e9b64a',
+  title:'پنجره طلایی لندن + نیویورک',
+  desc:'بیشترین نقدینگی و نوسان بازار — بهترین زمان برای اسکالپ و معاملات روزانه'},
+ {key:'sydto', a:'sydney', b:'tokyo',   golden:false, color:'#2dd4bf',
+  title:'هم‌پوشانی سیدنی + توکیو',
+  desc:'شروع روز معاملاتی آسیا و اقیانوسیه — نقدینگی استرالیا و ژاپن'},
+ {key:'tolon', a:'tokyo',  b:'london',  golden:false, color:'#f472b6',
+  title:'هم‌پوشانی توکیو + لندن',
+  desc:'پل آسیا و اروپا — پایان سشن توکیو و شروع سشن لندن'}
+];
+function ovFlagHTML(id,cls){return '<div class="ovflag '+cls+'" aria-hidden="true">'+(FLAG[SESSION_FLAG[id]]||'')+'</div>';}
+function renderOverlapCards(){const el=$('#overlapCards');if(!el)return;
+ el.innerHTML=OVPAIRS.map(p=>{
+  const a=byId[p.a],b=byId[p.b];const segs=pairSeg(a,b);if(!segs.length)return '';
+  const w={st:segs[0][0],en:segs[0][1]};
+  return '<div class="card ovcard'+(p.golden?' golden-card ovcard-golden':'')+'">'
+   +'<div class="ovflags">'+ovFlagHTML(p.a,'a')+ovFlagHTML(p.b,'b')+'<div class="ovdim"></div></div>'
+   +'<div class="ov-body">'
+   +'<div class="ov-top"><h3>'+p.title+'</h3>'+(p.golden?'<span class="chip ov-chip">پنجره طلایی</span>':'')+'</div>'
+   +'<p class="muted small ov-desc">'+p.desc+'</p>'
+   +'<div class="gold-stat" id="ovstat-'+p.key+'"></div>'
+   +'<div class="bar"><i id="ovbar-'+p.key+'" style="width:0%;background:'+p.color+'"></i></div>'
+   +'<div class="gold-times"><span>'+ltr(gmtRange(w))+' GMT</span><span>مدت: '+fa(Math.round((segs[0][1]-segs[0][0])/60))+' ساعت</span></div>'
+   +'<div class="muted small gold-local" id="ovlocal-'+p.key+'"></div>'
+   +'</div></div>';}).join('');}
+function tickOverlapCards(){OVPAIRS.forEach(p=>{
+  const g=pairState(byId[p.a],byId[p.b]);
+  const st=$('#ovstat-'+p.key);if(st)st.innerHTML=g.active
+   ?'<span class="bdg on">در جریان است</span><span class="small muted">پایان تا '+cdText(g.endTs-CTX.nowMs)+'</span>'
+   :'<span class="bdg off">غیرفعال</span><span class="small muted">شروع تا '+cdText(g.nextTs-CTX.nowMs)+'</span>';
+  const bar=$('#ovbar-'+p.key);if(bar)bar.style.width=g.active?Math.round(g.prog*100)+'%':'0%';
+  const lo=$('#ovlocal-'+p.key);if(lo)lo.innerHTML='به وقت شما: '+ltr(fmtLocal(g.active?g.startTs:g.nextTs)+' – '+fmtLocal(g.endTs));});}
 
 /* ---------- داشبورد ---------- */
 function dashSessions(){const el=$('#dashSessions');if(!el)return;
@@ -1338,13 +1368,6 @@ function tickMarket(){const m=marketInfo();
  const pill=$('#marketPill');pill.className='pill '+(m.open?'open':'closed');
  pill.innerHTML='<span class="dot '+(m.open?'on':'off')+'"></span>'+(m.open?'بازار فارکس باز است':'بازار فارکس بسته است');
  $('#marketLine').innerHTML='<span class="dot '+(m.open?'on':'off')+'"></span><span>'+(m.open?'تا بسته شدن بازار:':'تا باز شدن بازار:')+'</span><b>'+cdText(m.chgTs-CTX.nowMs)+'</b>';}
-function tickGolden(){const g=goldenState();
- $('#goldenStatus').innerHTML=g.active
-  ?'<span class="bdg on">در جریان است</span><span class="small muted">پایان تا '+cdText(g.endTs-CTX.nowMs)+'</span>'
-  :'<span class="bdg off">غیرفعال</span><span class="small muted">شروع تا '+cdText(g.nextTs-CTX.nowMs)+'</span>';
- $('#goldenBar').style.width=g.active?Math.round(g.prog*100)+'%':'0%';
- $('#goldenRange').innerHTML='<span>'+ltr(gmtRange({st:g.seg[0],en:g.seg[1]}))+' GMT</span>';
- $('#goldenLocal').innerHTML='به وقت شما: '+ltr(fmtLocal(g.active?g.startTs:g.nextTs)+' – '+fmtLocal(g.endTs));}
 function nextEvent(){const now=CTX.nowMs;let best=null;EVENTS.forEach(e=>{const t=evTs(e);if(t>now&&(!best||t<evTs(best)))best=e;});return best;}
 function dashNextEvent(){const el=$('#dashNextEvent');if(!el)return;const e=nextEvent();
  if(!e){el.innerHTML='<p class="muted small" style="margin-bottom:10px">رویدادی ثبت نشده است. از بخش رویدادها یا تقویم اضافه کنید.</p><button class="btn btn-ghost small" data-goto="events">افزودن رویداد</button>';return;}
@@ -1458,9 +1481,6 @@ function tickTfCards(){TFS.forEach(tf=>{const i=tfInfo(tf);const rw=$('#rw-'+tf.
  pct.textContent=fa(pv)+'٪';
  foot.innerHTML=tfFoot(i,tf);});}
 let _cndSig='';
-const CND_RC=2*Math.PI*8;
-const DASH_PAL={m1:'#34d399',m5:'#38bdf8',m15:'#a78bfa',m30:'#fb923c',h1:'#2dd4bf',h4:'#c084fc',d1:'#f472b6',w1:'#e9b64a',mn1:'#f87171'};
-const DASH_FALLBACK=['#34d399','#38bdf8','#a78bfa','#fb923c','#2dd4bf','#c084fc','#f472b6','#e9b64a','#f87171'];
 function dashCandles(){const el=$('#dashCandles');if(!el)return;const mk=marketInfo();
  if(!mk.open){if(_cndSig!=='closed'){_cndSig='closed';
    el.innerHTML='<div class="cnd-closed"><span class="chip">بازار فارکس بسته است</span><b class="mid">'+cdText(mk.chgTs-CTX.nowMs)+'</b><span class="muted small">تا شروع مجدد</span></div>';}
@@ -1468,19 +1488,18 @@ function dashCandles(){const el=$('#dashCandles');if(!el)return;const mk=marketI
   return;}
  const list=TFS.slice(0,6);const sig=list.map(t=>t.id).join(',');
  if(_cndSig!==sig){_cndSig=sig;
-  el.innerHTML='<div class="cndbar">'+list.map(function(tf,idx){
+  el.innerHTML='<div class="cndbar">'+list.map(function(tf){
    const i=tfInfo(tf);const prog=i.closed?0:Math.max(0,Math.min(1,i.prog));
-   const c=DASH_PAL[tf.id]||DASH_FALLBACK[idx%DASH_FALLBACK.length];
+   const frac=1-prog;
    return '<button type="button" class="cndst" data-tf="'+tf.id+'" aria-pressed="false" title="انتخاب '+tf.label+' برای تایمر هدر">'
    +'<span class="cnd-tfl">'+tf.label+'</span>'
-   +'<svg class="cnr" viewBox="0 0 20 20" aria-hidden="true"><circle class="cnr-track" cx="10" cy="10" r="8"/>'
-   +'<circle class="cnr-prog" id="cnr-'+tf.id+'" cx="10" cy="10" r="8" stroke="'+c+'" stroke-dasharray="'+CND_RC.toFixed(2)+'" stroke-dashoffset="'+(CND_RC*(1-prog)).toFixed(2)+'"/></svg>'
-   +'<b class="cnd-cd" id="cnc-'+tf.id+'">'+(i.closed?'—':fmtCdRing(i.remain))+'</b></button>';}).join('')+'</div>';
+   +'<b class="cnd-cd" id="cnc-'+tf.id+'">'+(i.closed?'—':fmtCdRing(i.remain))+'</b>'
+   +'<span class="cnd-bar" aria-hidden="true"><i id="cnr-'+tf.id+'" style="width:'+(frac*100).toFixed(1)+'%"></i></span></button>';}).join('')+'</div>';
   markDashActive();}
  list.forEach(function(tf){const i=tfInfo(tf);
-  const a=$('#cnr-'+tf.id),c=$('#cnc-'+tf.id);if(!a||!c)return;
+  const b=$('#cnr-'+tf.id),c=$('#cnc-'+tf.id);if(!b||!c)return;
   const prog=i.closed?0:Math.max(0,Math.min(1,i.prog));
-  a.style.strokeDashoffset=(CND_RC*(1-prog)).toFixed(2);
+  b.style.width=((1-prog)*100).toFixed(1)+'%';
   c.innerHTML=fmtCdRing(i.remain);});}
 function markDashActive(){const bar=document.querySelector('.cndbar');if(!bar)return;
  const hid=(headTf()||{}).id;
@@ -1803,12 +1822,13 @@ $('#setDst').addEventListener('change',e=>{DST=e.target.checked;store.set('fx_ds
 const setCalModeEl=document.getElementById('setCalignMode');
 if(setCalModeEl)setCalModeEl.addEventListener('change',function(){setMode(this.value);});
 $('#setHeadTf').addEventListener('change',e=>{HEADTF=e.target.value;store.set('fx_headtf',HEADTF);tickHeader();});
-function tickHeader(){const tf=headTf(),arc=$('#htArc');if(!tf||!arc)return;const i=tfInfo(tf);
- const C=2*Math.PI*14.5,frac=i.closed?0:Math.max(0,Math.min(1,1-i.prog));
- arc.style.strokeDasharray=C.toFixed(2);arc.style.strokeDashoffset=(C*(1-frac)).toFixed(2);
+function tickHeader(){const tf=headTf(),bar=$('#htArcBar');if(!tf||!bar)return;const i=tfInfo(tf);
+ const frac=i.closed?0:Math.max(0,Math.min(1,1-i.prog));
+ bar.style.width=(frac*100).toFixed(1)+'%';
  $('#htCd').innerHTML=fmtCdSec(i.remain);
- $('#htLbl').textContent=(i.closed?'بازار بسته':'تا بسته شدن')+' · '+tf.label;
- $('#hdrTimer').title='چیدمان بروکر: '+calignLabel()+(CSKEW?' · تنظیم ثانیه: '+(CSKEW>0?'+':'−')+fa(Math.abs(CSKEW)):'');}
+ $('#htLbl').textContent=i.closed?'بازار بسته':tf.label;
+ $('#hdrTimer').classList.toggle('closed',!!i.closed);
+ $('#hdrTimer').title='چیدمان بروکر: '+calignLabel()+(CSKEW?' · تنظیم ثانیه: '+(CSKEW>0?'+':'−')+fa(Math.abs(CSKEW)):'')+(i.closed?' — شمارش تا باز شدن بازار':'');}
 const BK_KEYS=['fx_theme','fx_dst','fx_tz','fx_mhtz','fx_mh24','fx_tfs','fx_calign','fx_calign_mode','fx_calign_auto','fx_skew','fx_headtf','fx_events','fx_checklist','fx_trades','fx_tab','fx_notify','fx_sbnot','fx_bgkeep'];
 function backupObj(){const data={};BK_KEYS.forEach(k=>{const v=localStorage.getItem(k);
  if(v!=null){try{data[k]=JSON.parse(v);}catch(err){data[k]=v;}}});
@@ -2042,18 +2062,22 @@ $('#bgKeep').addEventListener('change',function(){
  else{bgStop();toast('اجرای زنده پس‌زمینه خاموش شد');}});
 
 /* ---------- حلقه اصلی ---------- */
+function brokerInfo(ts){const off=tzOffsetMin(ts,'America/New_York')+420;const w=new Date(ts+off*6e4);return{h:w.getUTCHours(),mi:w.getUTCMinutes(),s:w.getUTCSeconds(),off:off};}
 function tick(){
  const P=tzParts(CTX.nowMs);
  $('#bigClock').innerHTML=clockHTML(PAD2(P.h)+':'+PAD2(P.mi)+':'+PAD2(P.s));
  $('#gmtClock').innerHTML=clockHTML(PAD2(new Date(CTX.nowMs).getUTCHours())+':'+PAD2(new Date(CTX.nowMs).getUTCMinutes())+':'+PAD2(new Date(CTX.nowMs).getUTCSeconds()));
+ const br=brokerInfo(CTX.nowMs);
+ $('#brokerClock').innerHTML=clockHTML(PAD2(br.h)+':'+PAD2(br.mi)+':'+PAD2(br.s));
+ const bo=$('#brokerOff');if(bo)bo.innerHTML='<span class="mini-flag" aria-hidden="true">'+FLAG.us+'</span><span>بروکر · UTC'+(br.off>=0?'+':'−')+fa(Math.round(Math.abs(br.off)/60))+'</span>';
  const j=toJalaali(P.y,P.mo,P.d);
  $('#dateJ').textContent=fa(j.jd)+' '+JM[j.jm-1]+' '+fa(j.jy);
  $('#dateG').textContent=fa(P.d)+' '+GM[P.mo-1]+' '+fa(P.y);
  $('#dow').textContent=DOW[dowIdx(P.wd)];
  renderTzChip();
  tickMarket();tickHeader();tickSyncClocks();ntTick();sbTick();bgTick();
- if(activeTab==='dashboard'){dashSessions();tickGolden();dashNextEvent();renderWorld();dashCandles();}
- if(activeTab==='sessions'){renderSessionCards();tickMH();}
+ if(activeTab==='dashboard'){dashSessions();dashNextEvent();renderWorld();dashCandles();}
+ if(activeTab==='sessions'){renderSessionCards();tickMH();tickOverlapCards();}
  if(activeTab==='candles'){tickTfCards();}
  if(activeTab==='events')renderEventsTab();
 }
@@ -2068,7 +2092,7 @@ function init(){
  renderEventsTab();renderCL();renderStatics();
  buildCalSelects();renderCalignControls();renderTfChips();renderTfCards();
  renderSettings();renderTzFlag();renderTrades();
- syncNTUI();try{localStorage.removeItem('fx_battery');}catch(e){}
+ syncNTUI();try{localStorage.removeItem('fx_battery');localStorage.removeItem('fx_installed');}catch(e){}
  if(SBN.on)sbPush();
  computeCtx();renderTzChip();
  $('#evDate').value=isoToday();

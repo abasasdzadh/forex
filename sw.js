@@ -1,5 +1,5 @@
 /* ترید دسک — سرویس‌ورکر آفلاین (PWA) */
-const VER = 'fxdesk-v2.7.5';
+const VER = 'fxdesk-v2.8.20';
 const CACHE = 'fxdesk-' + VER;
 const ASSETS = [
   './index.html',
